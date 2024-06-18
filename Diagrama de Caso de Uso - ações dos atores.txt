@@ -1,0 +1,24 @@
+a primeira coisa que o pdv faz quando entra no sistema é
+logar no sistema (perguntar se deseja abrir o caixa)
+abrir caixa com um valor de abertura (resuprimento) (imprime cupom?)
+ver resumo de caixa
+retirada do caixa (sangria) (imprime cupom?)
+adicionar produto ao carrinho (vender)
+finalizar venda (escolher método de pagamento + autocalcular troco, caso dinheiro)
+dar desconto para o item
+abrir calculadora
+remover item
+registrar devolução 
+registrar troca
+ver visão geral do caixa (exibir mensagem caso cx aberto)
+fechar o caixa
+buscar preço
+cadastrar fornecedor
+cadastrar produto ao estoque (global, do grupo, ou local)
+cadastrar cliente
+cadastrar serviço
+deslogar no sistema (obrigatório fechar o caixa)
+visualizar relatório
+exportar relatório
+
+

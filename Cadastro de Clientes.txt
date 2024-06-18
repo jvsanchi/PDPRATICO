@@ -1,0 +1,12 @@
+Cadastro de Clientes
+
+Nome
+Código
+Observações
+Data de Nascimento
+R.G. / I.E.
+CPF / CNPJ
+Endereço
+Telefone
+Email
+

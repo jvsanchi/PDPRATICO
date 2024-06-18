@@ -1,0 +1,7 @@
+Cadastro de Tributação
+
+NCM
+CEST
+Código Benefício (opcional)
+Tipo de Tributação
+

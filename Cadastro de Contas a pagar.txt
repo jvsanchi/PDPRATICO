@@ -1,0 +1,11 @@
+Cadastro de Contas a pagar
+
+Status (a vencer, pago e vencida)
+Vencimento
+Valor
+Referente a 
+Fornecedor
+Tipo
+Dias
+Mês Semana
+Pago em

@@ -1,0 +1,14 @@
+Cadastro de Kit / Combo
+
+Funções:
+Incluir Produto
+Editar Produto
+Excluir Produto
+
+Itens do Banco de dados
+Código
+Descrição
+Quantidade
+Valor Unitário
+Valor Total
+Valor Total do Kit / Combo

@@ -1,0 +1,19 @@
+Cadastro de Opções
+
+Preço Promocional de Vendas
+
+Nome do produto
+Vender este produto com preço promocional
+Data inicial
+Data Final
+Preço Promocional
+
+
+Comissão
+Valor da comissão (em porcentagem)
+Sobre (preço de venda ou valor do lucro)
+
+Fidelidade
+Fidelização de cliente por acúmulo de pontos e resgate de prêmios
+Aivar
+Pontos necessários para resgate

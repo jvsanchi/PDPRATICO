@@ -1,0 +1,16 @@
+Cadastro de produto
+
+Código ID (pode ser automático ou não) 
+EAN / GTIN
+Nome
+Foto / Thumbnail
+Categoria
+Subcategoria
+Marca
+Localização 
+Preço de Venda
+Preço de Custo
+Estoque Atual
+Unidade de Medida (permite fracionamento - exemplo: venda por peso / kg)
+Limites de Estoque
+Observações 
