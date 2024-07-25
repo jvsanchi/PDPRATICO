@@ -1,0 +1,141 @@
+Telas
+
+Fluxo de autenticação
+	Tela de Autenticação:
+		Campo de email
+		Campo de senha
+		Botão logar
+		Botão esqueci minha senha
+	Tela esqueci minha senha
+		Campo de email
+		Botão esqueci
+		Botão 
+		
+
+Funcionalidades
+Autenticação
+	O usuário consegue logar no sistema utilizando email e senha.
+	O usuário consegue fazer logoff
+	O usuário consegue recuperar senha via email caso tenha esquecido.
+	O usuário consegue criar uma conta para trabalhador da banca
+	Não há criação de conta para dono/gerente.
+
+Permissão.
+	Existe usuário do tipo dono, que possui amplas permissões dentro do escopo de suas bancas.
+	O usuário dono é associado a uma empresa, a empresa possui bancas
+	Existe o usuário do tipo funcionário, que possui permissões limitadas
+	O usuário funcionário é associado a uma empresa e a um subconjunto das bancas da empresa (p.exemplo, a apenas 1)
+	Podem existir n funcionários associados a uma banca ou empresa.
+
+Abrir caixa
+	Pergunta-se a quantidade de dinheiro no caixa a cada início de dia.
+	È possível o adicionar/subtrair (Sangria) dinheiro do caixa, sendo aquele dinheiro identificável como não do caixa e sim do funcionário/dono
+
+
+Controle de caixa (o dinheiro físico)
+	É possível a visualização dos extratos de caixa
+    		pelo gerente
+    		pelo funcionário da loja.
+	– fora de escopo – É possível exportar a visualização do extrato.
+	É possível visualizar o estado consolidado do caixa
+
+Registro de itens (produtos):
+	É possível adicionar itens
+    	   nome, foto, unidade (kg/un/g/punhado), código de barra, etc
+	É possível listar itens registrados
+	É possível buscar itens já registrados
+	O registro de itens deveria ser exportável
+
+Registro de Estoque:
+	É possível editar quantidade itens em estoque, por padrão um item tem 0 de estoque.
+	É possível visualizar todo o estoque.
+
+Registro de fornecedor (objetivo financeiro/fiscal):
+	É possível cadastrar fornecedores.
+    	   CNPJ, nome, telefone, endereço
+	É possível registrar pagamento a um fornecedor 
+
+
+Registros de cliente::
+	Registra clientes
+	É possível criar uma dívida para o cliente (como uma conta)
+
+Registro de serviços
+	Registra o serviço
+	Parece um produto, porém não possui estoque.
+	
+Processo de Venda (para o cliente):
+	Pode-se iniciar uma Venda.
+	Pode-se buscar produtos para adicionar ao carrinho, controle de quantidade
+Respeitando-se o estoque	
+Pode-se buscar serviços par adicionar ao carrinho. Controle de quantidade.
+	Pode-se deletar produtos/serviços.
+	Pode-se escolher a forma de pagamento -> 
+		se for dinheiro, perguntar quanto foi dado e mostrar o troco.
+		Se for fiado, pode-se identificar o cliente.
+	Pode-se declarar como pago ou não paga.
+	Pode-se jogar fora o carrinho.
+
+Processo de troca (não é devolução):
+	Pode-se abrir um processo de venda com troca de item.
+	Botão necessariamente separado.
+
+Processo de compra (comprando dos fornecedores):
+Pode-se registrar uma compra, contendo valor gasto, fornecedor que pagou e qual item comprou. O estoque não é importante aqui.
+
+
+Processo de contas a pagar:
+É possível registrar um pagamento sob o rótulo de Imposto, conta de consumo, funcionário, lucro (prolabore).
+
+
+Relatórios:
+	O dono pode faer de todas as bancas, o funcionário apenas da banca que trabalha.
+	Produtos/Serviços vendidos vs Data vs grana.
+		Pode-se filtrar de acordo com o tipo de movimentação.
+			serviços/produtos/
+		Pode escolher soma de bancas.
+		Pode escolher as bancas individualmente como comparativo.
+		Poder Fazer agrupamento por horário/dia/dia de semana/mês
+		Gráficos são bem vindos.
+	Visualizar relação de estoque.
+
+	
+    
+
+
+
+
+
+Movimentação - caixa + dinheiro não fisico (crédito, pix, etc)
+
+Vinicíus	
+	Listar campos dos itens
+
+
+
+Modelos de dados
+Usuário
+Tpo: funcionario/Dono/Gestor
+	empresa:
+	
+Empresa
+
+Banca:
+	
+Gastos:
+	Data de criação da entrada
+	Data da nota fiscal
+	Tipo: (Imposto, conta de consumo, funcionário, lucro
+
+Carrinho
+
+Venda
+
+Itens
+
+Estoque
+
+Serviços
+
+Fornececor
+
