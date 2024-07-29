@@ -1,6 +1,6 @@
 Telas
 
-Fluxo de autenticação
+Fluxo de autenticação 
 	Tela de Autenticação:
 		Campo de email
 		Campo de senha
@@ -14,16 +14,16 @@ Fluxo de autenticação
 
 Funcionalidades
 Autenticação
-	O usuário consegue logar no sistema utilizando email e senha.
-	O usuário consegue fazer logoff
-	O usuário consegue recuperar senha via email caso tenha esquecido.
-	O usuário consegue criar uma conta para trabalhador da banca
+	✅ O usuário consegue logar no sistema utilizando email e senha.
+	✅ O usuário consegue fazer logoff
+	✅ O usuário consegue recuperar senha via email caso tenha esquecido.
+	✅ O usuário consegue criar uma conta para trabalhador da banca
 	Não há criação de conta para dono/gerente.
 
 Permissão.
-	Existe usuário do tipo dono, que possui amplas permissões dentro do escopo de suas bancas.
-	O usuário dono é associado a uma empresa, a empresa possui bancas
-	Existe o usuário do tipo funcionário, que possui permissões limitadas
+	✅ Existe usuário do tipo dono, que possui amplas permissões dentro do escopo de suas bancas.
+	✅ O usuário dono é associado a uma empresa, a empresa possui bancas
+	✅ Existe o usuário do tipo funcionário, que possui permissões limitadas
 	O usuário funcionário é associado a uma empresa e a um subconjunto das bancas da empresa (p.exemplo, a apenas 1)
 	Podem existir n funcionários associados a uma banca ou empresa.
 
