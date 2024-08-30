@@ -1,15 +1,25 @@
-// /src/app/components/Sidebar.tsx
 "use client";
 
 import { useState } from "react";
 import Link from "next/link";
-import { FaUser, FaProductHunt, FaBars } from "react-icons/fa"; // Exemplo de ícones
+import {
+  FaUser,
+  FaProductHunt,
+  FaBars,
+  FaCaretDown,
+  FaCaretUp,
+} from "react-icons/fa"; // Adicione ícones para expandir/recolher
 
 const Sidebar = () => {
   const [isExpanded, setIsExpanded] = useState(true);
+  const [showClientsSubmenu, setShowClientsSubmenu] = useState(false);
 
   const toggleSidebar = () => {
     setIsExpanded(!isExpanded);
+  };
+
+  const toggleClientsSubmenu = () => {
+    setShowClientsSubmenu(!showClientsSubmenu);
   };
 
   return (
@@ -36,14 +46,41 @@ const Sidebar = () => {
         <FaBars size={24} />
       </button>
       <ul style={{ listStyleType: "none", padding: 0 }}>
+        {/* Menu Principal */}
         <li style={{ marginBottom: "20px" }}>
-          <Link href="/clients">
-            <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
-              <FaUser size={24} />
-              {isExpanded && <span>Clientes</span>}
-            </div>
-          </Link>
+          <div
+            onClick={toggleClientsSubmenu}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              cursor: "pointer",
+              gap: "10px",
+            }}
+          >
+            <FaUser size={24} />
+            {isExpanded && <span>Clientes</span>}
+            {isExpanded &&
+              (showClientsSubmenu ? (
+                <FaCaretUp size={16} />
+              ) : (
+                <FaCaretDown size={16} />
+              ))}
+          </div>
+          {showClientsSubmenu && (
+            <ul style={{ listStyleType: "none", padding: "10px 0 0 20px" }}>
+              <li style={{ marginBottom: "10px" }}>
+                <Link href="/clients">Listar Clientes</Link>
+              </li>
+              <li style={{ marginBottom: "10px" }}>
+                <Link href="/clients/new">Novo Cliente</Link>
+              </li>
+              <li style={{ marginBottom: "10px" }}>
+                <Link href="/clients/delete">Deletar Cliente</Link>
+              </li>
+            </ul>
+          )}
         </li>
+        {/* Outros itens de menu */}
         <li style={{ marginBottom: "20px" }}>
           <Link href="/products">
             <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
