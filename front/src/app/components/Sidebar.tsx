@@ -38,7 +38,7 @@ const Sidebar = () => {
       <ul style={{ listStyleType: "none", padding: 0 }}>
         <li style={{ marginBottom: "20px" }}>
           <Link href="/clients">
-            <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
               <FaUser size={24} />
               {isExpanded && <span>Clientes</span>}
             </div>

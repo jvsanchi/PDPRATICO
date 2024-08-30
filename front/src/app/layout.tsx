@@ -2,20 +2,13 @@ import Sidebar from "./components/Sidebar";
 
 import './styles/global.css';
 
-
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body>
-        <div style={{ display: "flex" }}>
-          <Sidebar />
-          <main style={{ marginLeft: "200px", padding: "20px", flexGrow: 1 }}>
-            {children}
-          </main>
+      <body style={{ display: "flex" }}>
+        <Sidebar />
+        <div style={{ marginLeft: "30px", flex: 1 }}>
+          {children}
         </div>
       </body>
     </html>
