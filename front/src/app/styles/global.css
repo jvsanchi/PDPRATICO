@@ -1,0 +1,21 @@
+/* /src/app/styles/globals.css */
+table {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin: 20px 0;
+  font-family: Arial, sans-serif;
+}
+
+th, td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #f4f4f4;
+}
+
+tr:hover {
+  background-color: #f1f1f1;
+}
