@@ -2,13 +2,6 @@
 /dist
 /node_modules
 
-front/node_modules
-
-back/node_modules
-back/.env
-
-*.env
-
 # Logs
 logs
 *.log
@@ -17,6 +10,9 @@ pnpm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
+
+
+.env
 
 # OS
 .DS_Store
