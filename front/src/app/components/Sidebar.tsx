@@ -2,13 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import {
-  FaUser,
-  FaProductHunt,
-  FaBars,
-  FaCaretDown,
-  FaCaretUp,
-} from "react-icons/fa"; // Adicione ícones para expandir/recolher
+import { FaUser, FaProductHunt, FaBars, FaCaretDown, FaCaretUp } from "react-icons/fa"; // Adicione ícones para expandir/recolher
 
 const Sidebar = () => {
   const [isExpanded, setIsExpanded] = useState(true);
@@ -48,34 +42,38 @@ const Sidebar = () => {
       <ul style={{ listStyleType: "none", padding: 0 }}>
         {/* Menu Principal */}
         <li style={{ marginBottom: "20px" }}>
-          <div
-            onClick={toggleClientsSubmenu}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              cursor: "pointer",
+          <div 
+            onClick={toggleClientsSubmenu} 
+            style={{ 
+              display: "flex", 
+              alignItems: "center", 
+              cursor: "pointer", 
               gap: "10px",
+              padding: isExpanded ? "10px 0" : "0"
             }}
           >
             <FaUser size={24} />
             {isExpanded && <span>Clientes</span>}
-            {isExpanded &&
-              (showClientsSubmenu ? (
-                <FaCaretUp size={16} />
-              ) : (
-                <FaCaretDown size={16} />
-              ))}
+            {isExpanded && (
+              showClientsSubmenu ? <FaCaretUp size={16} /> : <FaCaretDown size={16} />
+            )}
           </div>
-          {showClientsSubmenu && (
+          {showClientsSubmenu && isExpanded && (
             <ul style={{ listStyleType: "none", padding: "10px 0 0 20px" }}>
               <li style={{ marginBottom: "10px" }}>
-                <Link href="/clients">Listar Clientes</Link>
+                <Link href="/clients/new">
+                  Novo Cliente
+                </Link>
               </li>
               <li style={{ marginBottom: "10px" }}>
-                <Link href="/clients/new">Novo Cliente</Link>
+                <Link href="/clients">
+                  Listar Clientes
+                </Link>
               </li>
               <li style={{ marginBottom: "10px" }}>
-                <Link href="/clients/delete">Deletar Cliente</Link>
+                <Link href="/clients/delete">
+                  Deletar Cliente
+                </Link>
               </li>
             </ul>
           )}
@@ -83,7 +81,7 @@ const Sidebar = () => {
         {/* Outros itens de menu */}
         <li style={{ marginBottom: "20px" }}>
           <Link href="/products">
-            <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "10px", padding: isExpanded ? "10px 0" : "0" }}>
               <FaProductHunt size={24} />
               {isExpanded && <span>Produtos</span>}
             </div>
