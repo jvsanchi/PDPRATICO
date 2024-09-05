@@ -16,7 +16,7 @@ export class CustomerService {
   ) {}
 
   async findAll(): Promise<any> {
-    return this.customer.find();
+    return this.customer.find({ where: { activated: true } });
   }
 
   async createCustome(createCustomer: CreateCustomerDTO): Promise<any> {
@@ -89,6 +89,21 @@ export class CustomerService {
     }
 
     checkCustomer.activated = false;
+    checkCustomer.updated_at = new Date();
+
+    return await this.customer.save(checkCustomer);
+  }
+
+  async activedCustomer(id: number): Promise<any> {
+    const checkCustomer = await this.customer.findOne({
+      where: { id: id },
+    });
+
+    if (!checkCustomer) {
+      throw new CustomException("Customer not Found", HttpStatus.NOT_FOUND);
+    }
+
+    checkCustomer.activated = true;
     checkCustomer.updated_at = new Date();
 
     return await this.customer.save(checkCustomer);
