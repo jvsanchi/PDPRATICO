@@ -6,9 +6,9 @@ import { AccountsPayableController } from "./accountsPayable.controller";
 import { AccountsPayableService } from "./accountsPayable.service";
 
 @Module({
-  imports: [TypeOrmModule.forFeature([AccountsPayable])], // Importa o repositório da entidade
-  controllers: [AccountsPayableController], // Registra o controller
-  providers: [AccountsPayableService], // Registra o serviço
+  imports: [TypeOrmModule.forFeature([AccountsPayable])],
+  controllers: [AccountsPayableController],
+  providers: [AccountsPayableService],
   exports: [AccountsPayableService],
 })
 export class AccountsPayableModule {}
