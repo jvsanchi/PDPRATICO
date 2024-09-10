@@ -1,6 +1,13 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from "typeorm";
 import { Status } from "../enum/status.enum";
-import { CustomerEntity } from "./customer.entity";
+import { UserEntity } from "./user.entity";
 
 @Entity({ name: "accountsPayable" })
 export class AccountsPayable {
@@ -10,40 +17,40 @@ export class AccountsPayable {
   @Column({
     type: "enum",
     enum: Status,
-    default: Status.A_VENCER, // valor padrão
+    default: Status.A_VENCER, // Valor padrão
   })
   status: Status;
 
-  @ManyToOne(() => CustomerEntity, (customer) => customer.id)
-  customer: CustomerEntity;
+  @ManyToOne(() => UserEntity, (user) => user.accountsPayable)
+  user: UserEntity;
 
-  @Column({ name: "maturity" })
-  maturity: string; //Vencimento
+  @Column({ name: "maturity", type: "date" })
+  maturity: Date; // Vencimento (usando Date)
 
-  @Column({ name: "value" })
-  value: string; //Valor
+  @Column({ name: "value", type: "decimal", precision: 10, scale: 2 })
+  value: number; // Valor (usando number)
 
   @Column({ name: "regarding" })
-  regarding: string; //Referente a
+  regarding: string; // Referente a
 
   @Column({ name: "supplier" })
-  supplier: string; //Fornecedor
+  supplier: string; // Fornecedor
 
   @Column({ name: "type" })
-  type: string; //Tipo
+  type: string; // Tipo
 
   @Column({ name: "day" })
-  day: number; //Dias
+  day: number; // Dias
 
   @Column({ name: "monthWeek" })
-  monthWeek: string; //Mês Semana
+  monthWeek: string; // Mês/Semana
 
-  @Column({ name: "paid" })
-  paid: string; //Pago em
+  @Column({ name: "paid", type: "date", nullable: true })
+  paid: Date; // Pago em (usando Date e nullable para pagamentos pendentes)
 
-  @Column({ name: "created_at" })
-  created_at: Date;
+  @CreateDateColumn({ name: "created_at" })
+  created_at: Date; // Preenchido automaticamente
 
-  @Column({ name: "updated_at" })
-  updated_at: Date;
+  @UpdateDateColumn({ name: "updated_at" })
+  updated_at: Date; // Preenchido automaticamente
 }

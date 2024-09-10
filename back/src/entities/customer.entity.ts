@@ -1,13 +1,13 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { AccountsPayable } from "./accountsPayable.entity";
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { UserEntity } from "./user.entity";
 
 @Entity({ name: "customer" })
 export class CustomerEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @OneToMany(() => AccountsPayable, (accountsPayable) => accountsPayable.id)
-  accountsPayable: CustomerEntity;
+  @ManyToOne(() => UserEntity, (user) => user.customer)
+  user: UserEntity;
 
   @Column({ name: "name" })
   name: string;

@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { AccountsPayable } from "src/entities/accountsPayable.entity";
 import { Repository } from "typeorm";
-import { CreateAccounutsPayableDTO } from "./accounts_payableDTO/accountsPayable.dto";
+import { CreateAccountsPayableDTO } from "./accounts_payableDTO/accountsPayable.dto";
 
 @Injectable()
 export class AccountsPayableService {
@@ -13,7 +13,7 @@ export class AccountsPayableService {
 
   // Create
   async create(
-    createAccountsPayableDto: CreateAccounutsPayableDTO,
+    createAccountsPayableDto: CreateAccountsPayableDTO,
   ): Promise<AccountsPayable> {
     const newAccountPayable = this.accountsPayableRepository.create(
       createAccountsPayableDto,

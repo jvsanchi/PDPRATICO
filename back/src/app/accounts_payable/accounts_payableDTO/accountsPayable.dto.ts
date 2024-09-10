@@ -1,16 +1,23 @@
-import { IsString, IsEnum, IsNumber, IsOptional } from "class-validator";
-
+import {
+  IsString,
+  IsEnum,
+  IsNumber,
+  IsOptional,
+  IsDate,
+} from "class-validator";
+import { Type } from "class-transformer";
 import { Status } from "../../../enum/status.enum";
 
-export class CreateAccounutsPayableDTO {
+export class CreateAccountsPayableDTO {
   @IsEnum(Status)
   status: Status;
 
-  @IsString()
-  maturity: string; // Vencimento
+  @IsDate()
+  @Type(() => Date) // Transforma o valor recebido em uma instância de Date
+  maturity: Date; // Vencimento
 
-  @IsString()
-  value: string; // Valor
+  @IsNumber()
+  value: number; // Valor
 
   @IsString()
   regarding: string; // Referente a
@@ -25,9 +32,10 @@ export class CreateAccounutsPayableDTO {
   day: number; // Dias
 
   @IsString()
-  monthWeek: string; // Mês Semana
+  monthWeek: string; // Mês/Semana
 
-  @IsString()
+  @IsDate()
   @IsOptional()
-  Paid?: string; // Pago em (opcional)
+  @Type(() => Date)
+  paid?: Date; // Pago em (opcional)
 }
