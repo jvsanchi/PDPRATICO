@@ -18,12 +18,20 @@ export class UserService {
     return this.userEntity.find({ where: { activated: true } });
   }
 
+  async findByEmail(email: string): Promise<any> {
+    const findEmail = await this.userEntity.findOne({ where: { email } });
+
+    return findEmail;
+  }
+
   async createUser(createUser: CreateUserDTO): Promise<any> {
     const hashedPassword = await BcryptUtil.hashPassword(createUser.password);
 
     const create = this.userEntity.create({
       name: createUser.name,
       email: createUser.email,
+      created_at: new Date(),
+      updated_at: new Date(),
       password: hashedPassword,
     });
     return await this.userEntity.save(create);
