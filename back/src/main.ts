@@ -9,6 +9,14 @@ async function bootstrap() {
     .setDescription("P-De-Pratico")
     .setVersion("1.0")
     .addTag("P-De-Pratico")
+    .addBearerAuth(
+      {
+        type: "http",
+        scheme: "bearer",
+        bearerFormat: "JWT",
+      },
+      "access-token",
+    )
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
