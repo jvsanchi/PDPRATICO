@@ -79,9 +79,9 @@ export class CustomerService {
     return await this.customer.save(checkCustomer);
   }
 
-  async disableCustomer(id: number): Promise<any> {
+  async disableCustomer(email: string): Promise<any> {
     const checkCustomer = await this.customer.findOne({
-      where: { id: id },
+      where: { email: email, activated: true },
     });
 
     if (!checkCustomer) {
@@ -94,9 +94,9 @@ export class CustomerService {
     return await this.customer.save(checkCustomer);
   }
 
-  async activedCustomer(id: number): Promise<any> {
+  async activedCustomer(email: string): Promise<any> {
     const checkCustomer = await this.customer.findOne({
-      where: { id: id },
+      where: { email: email, activated: false },
     });
 
     if (!checkCustomer) {

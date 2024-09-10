@@ -1,9 +1,13 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { AccountsPayable } from "./accountsPayable.entity";
 
 @Entity({ name: "customer" })
 export class CustomerEntity {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @OneToMany(() => AccountsPayable, (accountsPayable) => accountsPayable.id)
+  accountsPayable: CustomerEntity;
 
   @Column({ name: "name" })
   name: string;

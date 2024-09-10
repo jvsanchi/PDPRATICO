@@ -11,7 +11,9 @@ import {
 } from "@nestjs/common";
 import { CreateAccounutsPayableDTO } from "./accounts_payableDTO/accountsPayable.dto";
 import { AccountsPayableService } from "./accountsPayable.service";
+import { ApiTags } from "@nestjs/swagger";
 
+@ApiTags("accounts-payable")
 @Controller("accounts-payable")
 export class AccountsPayableController {
   constructor(

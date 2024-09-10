@@ -1,5 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Status } from "../enum/status.enum";
+import { CustomerEntity } from "./customer.entity";
 
 @Entity({ name: "accountsPayable" })
 export class AccountsPayable {
@@ -12,6 +13,9 @@ export class AccountsPayable {
     default: Status.A_VENCER, // valor padrão
   })
   status: Status;
+
+  @ManyToOne(() => CustomerEntity, (customer) => customer.id)
+  customer: CustomerEntity;
 
   @Column({ name: "maturity" })
   maturity: string; //Vencimento
