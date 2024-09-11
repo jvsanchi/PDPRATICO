@@ -34,6 +34,6 @@ export class RolesGuard implements CanActivate {
     }
 
     // Verifica se o usuário tem pelo menos um dos papéis requeridos
-    return user.roles.some((role: RoleEnum) => requiredRoles.includes(role));
+    return requiredRoles.includes(user.roles.role as RoleEnum);
   }
 }
