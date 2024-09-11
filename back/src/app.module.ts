@@ -1,7 +1,9 @@
-import { Module } from "@nestjs/common";
+import { Module, OnModuleInit } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { ConnectionModule } from "./db/connection.module";
 import { AppModules } from "./app/app.module";
+import { SeedModule } from "./seeds/Seed.module";
+import { SeedService } from "./seeds/seeds.service";
 
 @Module({
   imports: [
@@ -12,8 +14,15 @@ import { AppModules } from "./app/app.module";
       isGlobal: true,
     }),
     ConnectionModule,
+    SeedModule,
   ],
   controllers: [],
   providers: [],
 })
-export class AppModule {}
+export class AppModule implements OnModuleInit {
+  constructor(private readonly seedService: SeedService) {}
+
+  async onModuleInit() {
+    await this.seedService.seedRoles(); // Executa o seed
+  }
+}

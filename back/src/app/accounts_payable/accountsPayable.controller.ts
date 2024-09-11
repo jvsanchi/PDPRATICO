@@ -9,7 +9,7 @@ import {
   HttpCode,
   HttpStatus,
 } from "@nestjs/common";
-import { CreateAccounutsPayableDTO } from "./accounts_payableDTO/accountsPayable.dto";
+import { CreateAccountsPayableDTO } from "./accounts_payableDTO/accountsPayable.dto";
 import { AccountsPayableService } from "./accountsPayable.service";
 import { ApiTags } from "@nestjs/swagger";
 
@@ -22,7 +22,7 @@ export class AccountsPayableController {
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
-  create(@Body() createAccountsPayableDto: CreateAccounutsPayableDTO) {
+  create(@Body() createAccountsPayableDto: CreateAccountsPayableDTO) {
     return this.accountsPayableService.create(createAccountsPayableDto);
   }
 

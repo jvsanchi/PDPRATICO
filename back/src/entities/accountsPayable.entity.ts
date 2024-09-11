@@ -17,7 +17,7 @@ export class AccountsPayable {
   @Column({
     type: "enum",
     enum: Status,
-    default: Status.A_VENCER, // Valor padrão
+    default: Status.A_VENCER,
   })
   status: Status;
 
@@ -25,32 +25,32 @@ export class AccountsPayable {
   user: UserEntity;
 
   @Column({ name: "maturity", type: "date" })
-  maturity: Date; // Vencimento (usando Date)
+  maturity: Date;
 
   @Column({ name: "value", type: "decimal", precision: 10, scale: 2 })
-  value: number; // Valor (usando number)
+  value: number;
 
   @Column({ name: "regarding" })
-  regarding: string; // Referente a
+  regarding: string;
 
   @Column({ name: "supplier" })
-  supplier: string; // Fornecedor
+  supplier: string;
 
   @Column({ name: "type" })
-  type: string; // Tipo
+  type: string;
 
   @Column({ name: "day" })
-  day: number; // Dias
+  day: number;
 
   @Column({ name: "monthWeek" })
-  monthWeek: string; // Mês/Semana
+  monthWeek: string;
 
   @Column({ name: "paid", type: "date", nullable: true })
-  paid: Date; // Pago em (usando Date e nullable para pagamentos pendentes)
+  paid: Date;
 
   @CreateDateColumn({ name: "created_at" })
-  created_at: Date; // Preenchido automaticamente
+  created_at: Date;
 
   @UpdateDateColumn({ name: "updated_at" })
-  updated_at: Date; // Preenchido automaticamente
+  updated_at: Date;
 }

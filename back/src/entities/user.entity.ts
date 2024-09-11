@@ -1,33 +1,48 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { AccountsPayable } from "./accountsPayable.entity";
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  OneToMany,
+  JoinColumn,
+} from "typeorm";
+import { RoleEntity } from "./roles.entity";
 import { CustomerEntity } from "./customer.entity";
+import { AccountsPayable } from "./accountsPayable.entity";
 
-@Entity({ name: "user" })
+@Entity({ name: "users" })
 export class UserEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @OneToMany(() => AccountsPayable, (accountsPayable) => accountsPayable.user)
-  accountsPayable: AccountsPayable[];
-
-  @OneToMany(() => CustomerEntity, (customer) => customer.user)
-  customer: CustomerEntity[];
-
-  @Column({ name: "name" })
+  @Column()
   name: string;
 
-  @Column({ name: "email" })
+  @Column({ unique: true })
   email: string;
 
-  @Column({ name: "password" })
+  @Column()
   password: string;
 
-  @Column({ name: "activated", default: true })
+  @Column({ default: true })
   activated: boolean;
 
-  @Column({ name: "created_at" })
+  @Column()
   created_at: Date;
 
-  @Column({ name: "updated_at" })
+  @Column()
   updated_at: Date;
+
+  // Relacionamento com RoleEntity
+  @ManyToOne(() => RoleEntity, (role) => role.users)
+  @JoinColumn({ name: "role_id" })
+  role: RoleEntity;
+
+  // Relacionamento com CustomerEntity
+  @OneToMany(() => CustomerEntity, (customer) => customer.user)
+  customers: CustomerEntity[];
+
+  // Relacionamento com AccountsPayable
+  @OneToMany(() => AccountsPayable, (accountsPayable) => accountsPayable.user)
+  accountsPayable: AccountsPayable[];
 }

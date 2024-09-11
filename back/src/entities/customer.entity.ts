@@ -6,7 +6,7 @@ export class CustomerEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => UserEntity, (user) => user.customer)
+  @ManyToOne(() => UserEntity, (user) => user.customers)
   user: UserEntity;
 
   @Column({ name: "name" })
