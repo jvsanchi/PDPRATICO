@@ -2,10 +2,10 @@
 import { Module } from "@nestjs/common";
 import { JwtModule } from "@nestjs/jwt";
 import { PassportModule } from "@nestjs/passport";
-import { UserModule } from "../user/user.module"; // Módulo do usuário
 import { AuthService } from "./auth.service";
 import { JwtStrategy } from "./jwt.strategy";
 import { AuthController } from "./auth.controller";
+import { UserModule } from "src/app/user/user.module";
 
 @Module({
   imports: [

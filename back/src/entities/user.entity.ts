@@ -9,6 +9,7 @@ import {
 import { RoleEntity } from "./roles.entity";
 import { CustomerEntity } from "./customer.entity";
 import { AccountsPayable } from "./accountsPayable.entity";
+import { ProductEntity } from "./product.entity"; // Importe a entidade ProductEntity
 
 @Entity({ name: "users" })
 export class UserEntity {
@@ -45,4 +46,8 @@ export class UserEntity {
   // Relacionamento com AccountsPayable
   @OneToMany(() => AccountsPayable, (accountsPayable) => accountsPayable.user)
   accountsPayable: AccountsPayable[];
+
+  // Relacionamento com ProductEntity
+  @OneToMany(() => ProductEntity, (product) => product.user)
+  products: ProductEntity[];
 }

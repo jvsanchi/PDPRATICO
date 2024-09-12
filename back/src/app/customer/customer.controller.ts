@@ -1,10 +1,10 @@
 import { Body, Controller, Delete, Get, Patch, Post } from "@nestjs/common";
 import { CustomerService } from "./customer.service";
 import { CreateCustomerDTO } from "./customerDTO/customer.dto";
-import { ApiTags } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
 import { DisableCustomerDTO } from "./customerDTO/disable-customer.dto";
 import { EnableCustomerDTO } from "./customerDTO/enable-customer.dto";
-
+@ApiBearerAuth()
 @ApiTags("Customer")
 @Controller("customer")
 export class CustomerController {

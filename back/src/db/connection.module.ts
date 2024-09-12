@@ -4,6 +4,7 @@ import { CustomerEntity } from "../entities/customer.entity";
 import { AccountsPayable } from "src/entities/accountsPayable.entity";
 import { UserEntity } from "src/entities/user.entity";
 import { RoleEntity } from "src/entities/roles.entity";
+import { ProductEntity } from "src/entities/product.entity";
 
 @Module({
   imports: [
@@ -14,7 +15,13 @@ import { RoleEntity } from "src/entities/roles.entity";
       username: "root",
       password: "123456",
       database: "pdepratico",
-      entities: [CustomerEntity, AccountsPayable, UserEntity, RoleEntity],
+      entities: [
+        CustomerEntity,
+        AccountsPayable,
+        UserEntity,
+        RoleEntity,
+        ProductEntity,
+      ],
       synchronize: true,
     }),
   ],

@@ -3,8 +3,6 @@ import {
   Controller,
   Delete,
   Get,
-  Header,
-  Headers,
   Patch,
   Post,
   UseGuards,
@@ -13,10 +11,10 @@ import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
 import { UserService } from "./user.service";
 import { CreateUserDTO } from "./dto/create-user.dto";
 import { UpdateUserDTO } from "./dto/update-user.dto copy";
-import { JwtAuthGuard } from "../auth/jwt-auth.guard";
-import { RolesGuard } from "../roles/roles.guard";
 import { RoleEnum } from "src/enum/roles.enum";
-import { Roles } from "../roles/roles.decorator";
+import { RolesGuard } from "src/roles/roles.guard";
+import { JwtAuthGuard } from "src/auth/jwt-auth.guard";
+import { Roles } from "src/roles/roles.decorator";
 
 @ApiTags("Users")
 @ApiBearerAuth()
