@@ -5,6 +5,8 @@ import { AccountsPayable } from "src/entities/accountsPayable.entity";
 import { UserEntity } from "src/entities/user.entity";
 import { RoleEntity } from "src/entities/roles.entity";
 import { ProductEntity } from "src/entities/product.entity";
+import { CollaboratorEntity } from "src/entities/collaborator.entity";
+import { AdministratorEntity } from "src/entities/administrator.entity";
 
 @Module({
   imports: [
@@ -21,8 +23,10 @@ import { ProductEntity } from "src/entities/product.entity";
         UserEntity,
         RoleEntity,
         ProductEntity,
+        CollaboratorEntity,
+        AdministratorEntity,
       ],
-      synchronize: true,
+      synchronize: false,
     }),
   ],
 })

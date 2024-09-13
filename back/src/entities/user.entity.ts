@@ -9,7 +9,9 @@ import {
 import { RoleEntity } from "./roles.entity";
 import { CustomerEntity } from "./customer.entity";
 import { AccountsPayable } from "./accountsPayable.entity";
-import { ProductEntity } from "./product.entity"; // Importe a entidade ProductEntity
+import { ProductEntity } from "./product.entity";
+import { CollaboratorEntity } from "./collaborator.entity";
+import { AdministratorEntity } from "./administrator.entity";
 
 @Entity({ name: "users" })
 export class UserEntity {
@@ -28,10 +30,14 @@ export class UserEntity {
   @Column({ default: true })
   activated: boolean;
 
-  @Column()
+  @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
   created_at: Date;
 
-  @Column()
+  @Column({
+    type: "timestamp",
+    default: () => "CURRENT_TIMESTAMP",
+    onUpdate: "CURRENT_TIMESTAMP",
+  })
   updated_at: Date;
 
   // Relacionamento com RoleEntity
@@ -50,4 +56,13 @@ export class UserEntity {
   // Relacionamento com ProductEntity
   @OneToMany(() => ProductEntity, (product) => product.user)
   products: ProductEntity[];
+
+  // Relacionamento com CollaboratorEntity
+  @OneToMany(() => CollaboratorEntity, (collaborator) => collaborator.user)
+  collaborators: CollaboratorEntity[];
+
+  // Relacionamento com AdministratorEntity
+  @ManyToOne(() => AdministratorEntity, (administrator) => administrator.users)
+  @JoinColumn({ name: "administrator_id" })
+  administrator: AdministratorEntity;
 }

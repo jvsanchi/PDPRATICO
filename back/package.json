@@ -18,7 +18,9 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "start:seed": "ts-node -r tsconfig-paths/register src/seeds/seeds.ts"
+    "start:seed": "ts-node -r tsconfig-paths/register src/seeds/seeds.ts",
+    "migration:generate": "npx ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:generate ./src/migrations/$npm_config_name -d ./src/db/data-source.ts",
+    "migration:run": "npx ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:run -d ./src/db/data-source.ts"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
@@ -36,8 +38,7 @@
     "passport-jwt": "^4.0.1",
     "pg": "^8.12.0",
     "reflect-metadata": "^0.1.13",
-    "rxjs": "^7.8.1",
-    "typeorm": "^0.3.20"
+    "rxjs": "^7.8.1"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.0.0",
@@ -62,7 +63,8 @@
     "ts-loader": "^9.4.3",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
-    "typescript": "^5.1.3"
+    "typeorm": "^0.3.20",
+    "typescript": "^5.6.2"
   },
   "jest": {
     "moduleFileExtensions": [
