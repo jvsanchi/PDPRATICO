@@ -35,14 +35,14 @@ export class AccountsPayableController {
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(RoleEnum.MASTER, RoleEnum.ADMIN)
+  @Roles(RoleEnum.MASTER, RoleEnum.ADMIN, RoleEnum.COLLABORATOR)
   @Get()
   findAll() {
     return this.accountsPayableService.findAll();
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(RoleEnum.MASTER, RoleEnum.ADMIN)
+  @Roles(RoleEnum.MASTER, RoleEnum.ADMIN, RoleEnum.COLLABORATOR)
   @Get(":id")
   findOne(@Param("id") id: number) {
     return this.accountsPayableService.findOne(id);
