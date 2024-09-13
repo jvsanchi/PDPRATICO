@@ -3,4 +3,5 @@ export enum RoleEnum {
   MASTER = "MASTER",
   USER = "USER",
   MANAGER = "MANAGER",
+  COLLABORATOR = "COLLABORATOR",
 }

@@ -41,7 +41,7 @@ export class ProductController {
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(RoleEnum.MASTER, RoleEnum.ADMIN)
+  @Roles(RoleEnum.MASTER, RoleEnum.ADMIN, RoleEnum.COLLABORATOR)
   @Get()
   @ApiOperation({ summary: "Get all products" })
   @ApiResponse({
@@ -54,7 +54,7 @@ export class ProductController {
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(RoleEnum.MASTER, RoleEnum.ADMIN)
+  @Roles(RoleEnum.MASTER, RoleEnum.ADMIN, RoleEnum.COLLABORATOR)
   @Get(":id")
   @ApiOperation({ summary: "Get a product by ID" })
   @ApiParam({ name: "id", description: "Product ID" })
