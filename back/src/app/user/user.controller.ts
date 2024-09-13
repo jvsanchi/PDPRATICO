@@ -23,7 +23,7 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(RoleEnum.MASTER, RoleEnum.ADMIN)
+  @Roles(RoleEnum.MASTER)
   @Get()
   async findAll(): Promise<any> {
     return this.userService.findAll();
@@ -37,7 +37,7 @@ export class UserController {
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(RoleEnum.MASTER, RoleEnum.ADMIN)
+  @Roles(RoleEnum.MASTER)
   @Patch()
   async updateUser(@Body() updateUserDTO: UpdateUserDTO): Promise<any> {
     return this.userService.updateUser(updateUserDTO);
