@@ -6,7 +6,6 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { RoleEntity } from "src/entities/roles.entity";
 import { JwtConfigModule } from "src/auth/JwtConfig.module";
 
-
 @Module({
   imports: [
     TypeOrmModule.forFeature([UserEntity, RoleEntity]),

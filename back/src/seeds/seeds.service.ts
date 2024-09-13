@@ -14,6 +14,7 @@ export class SeedService {
   async seedRoles() {
     const roles = Object.values(RoleEnum);
 
+    // Verifica e atualiza ou insere os papéis
     for (const role of roles) {
       const roleExists = await this.roleRepository.findOne({ where: { role } });
 
