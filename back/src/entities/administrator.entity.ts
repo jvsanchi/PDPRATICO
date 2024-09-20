@@ -1,5 +1,13 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from "typeorm";
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  ManyToOne,
+  JoinColumn,
+} from "typeorm";
 import { UserEntity } from "./user.entity";
+import { RoleEntity } from "./roles.entity";
 
 @Entity({ name: "administrator" })
 export class AdministratorEntity {
@@ -7,7 +15,7 @@ export class AdministratorEntity {
   id: number;
 
   @Column({ length: 255 })
-  nome: string;
+  name: string;
 
   @Column({ unique: true, length: 255 })
   email: string;
@@ -30,6 +38,11 @@ export class AdministratorEntity {
   })
   // Data de atualização
   updated_at: Date;
+
+  // Relacionamento com RoleEntity
+  @ManyToOne(() => RoleEntity, (role) => role.admin)
+  @JoinColumn({ name: "role_id" })
+  role: RoleEntity;
 
   // Relacionamento com UserEntity
   @OneToMany(() => UserEntity, (user) => user.administrator)

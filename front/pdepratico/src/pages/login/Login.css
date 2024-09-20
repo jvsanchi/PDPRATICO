@@ -1,0 +1,97 @@
+/* Login.css */
+
+html,
+body {
+  height: 100%; /* Garante que o HTML e o body ocupem 100% da altura da tela */
+  margin: 0; /* Remove margens padrão */
+  padding: 0; /* Remove paddings padrão */
+  overflow: hidden; /* Remove qualquer rolagem indesejada */
+}
+
+.login-container {
+  display: flex;
+  height: 100vh; /* Ocupa a altura total da tela */
+  overflow: hidden; /* Garante que o contêiner não cause rolagem */
+}
+
+.login-image {
+  flex: 5; /* 80% do espaço disponível */
+  background-image: url("../../assets/login-background.jpg"); /* Substitua pelo caminho da sua imagem */
+  background-size: cover; /* A imagem cobre toda a área */
+  background-position: center; /* Centraliza a imagem */
+}
+
+.login-form {
+  flex: 2; /* 20% do espaço disponível */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff; /* Fundo branco */
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1); /* Sombra à esquerda */
+  height: 100%; /* Garante que o login-form ocupe 100% da altura */
+}
+
+.login-box {
+  width: 100%;
+  max-width: 300px; /* Largura máxima do formulário */
+  text-align: center;
+}
+
+.login-title {
+  margin-bottom: 10px; /* Reduz a margem inferior para aproximar do conteúdo abaixo */
+  margin-top: -80px; /* Move o h2 mais para cima */
+  font-size: 32px; /* Aumenta o tamanho da fonte */
+  font-weight: 700; /* Aumenta o peso da fonte para deixá-la mais destacada */
+  color: #333; /* Cor do texto */
+}
+
+.login-box h2 {
+  margin-bottom: 10px; /* Reduz a margem inferior para aproximar do conteúdo abaixo */
+  margin-top: -20px; /* Move o h2 mais para cima */
+  font-size: 32px; /* Aumenta o tamanho da fonte */
+  font-weight: 700; /* Aumenta o peso da fonte para deixá-la mais destacada */
+  color: #333; /* Cor do texto */
+}
+
+.login-box label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.login-box input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 6px; /* Bordas arredondadas */
+  font-size: 16px;
+  outline: none;
+  transition: border 0.3s;
+}
+
+.login-box input:focus {
+  border-color: #007bff; /* Cor de foco */
+}
+
+.login-box button {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #007bff; /* Cor azul */
+  border: none;
+  border-radius: 6px; /* Bordas arredondadas */
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.login-box button:hover {
+  background-color: #0056b3; /* Azul mais claro ao passar o mouse */
+}
+
+.error-message {
+  color: red;
+  font-size: 14px;
+  margin-bottom: 20px;
+}

@@ -4,10 +4,12 @@ import { UserEntity } from "src/entities/user.entity";
 import { Repository } from "typeorm";
 import { CreateUserDTO } from "./dto/create-user.dto";
 import { BcryptUtil } from "src/utils/bcrypt.util";
-import { UpdateUserDTO } from "./dto/update-user.dto copy";
+import { UpdateUserDTO } from "./dto/update-user.dto";
 import { CustomException } from "src/utils/customException";
 import { RoleEntity } from "src/entities/roles.entity";
 import { RoleEnum } from "src/enum/roles.enum";
+import { UpdateUserRolesDTO } from "./dto/update-user-role.dto";
+import { AdministratorEntity } from "src/entities/administrator.entity";
 
 @Injectable()
 export class UserService {
@@ -17,19 +19,22 @@ export class UserService {
 
     @InjectRepository(RoleEntity)
     private readonly roleEntity: Repository<RoleEntity>,
+
+    @InjectRepository(AdministratorEntity)
+    private readonly adminRepository: Repository<AdministratorEntity>,
   ) {}
 
   async findAll(): Promise<UserEntity[]> {
     return this.userEntity.find({
       where: { activated: true },
-      relations: ["role"],
+      relations: ["role", "administrator"],
     });
   }
 
   async findByEmail(email: string): Promise<any> {
     const findEmail = await this.userEntity.findOne({
       where: { email },
-      relations: ["role"],
+      relations: ["role", "administrator"],
     });
     return findEmail;
   }
@@ -37,16 +42,28 @@ export class UserService {
   async findById(id: number): Promise<UserEntity | undefined> {
     return this.userEntity.findOne({
       where: { id },
-      relations: ["role"], // Inclua isso se você precisar das informações do papel
+      relations: ["role", "administrator"],
     });
   }
 
   async createUser(createUser: CreateUserDTO): Promise<any> {
+    const adminInstance = await this.adminRepository.findOne({
+      where: { id: createUser.administratorId },
+      select: { id: true },
+    });
+
+    if (!adminInstance) {
+      throw new CustomException(
+        "user without permission",
+        HttpStatus.FORBIDDEN,
+      );
+    }
+
     const hashedPassword = await BcryptUtil.hashPassword(createUser.password);
 
     // Atribui o papel de ADMIN ao usuário por padrão
     const adminRole = await this.roleEntity.findOne({
-      where: { role: RoleEnum.ADMIN },
+      where: { role: RoleEnum.USER },
     });
 
     const create = this.userEntity.create({
@@ -55,7 +72,8 @@ export class UserService {
       created_at: new Date(),
       updated_at: new Date(),
       password: hashedPassword,
-      role: adminRole, // Relaciona o papel ao usuário
+      administrator: adminInstance,
+      role: adminRole,
     });
 
     return await this.userEntity.save(create);
@@ -94,9 +112,9 @@ export class UserService {
   }
 
   // Novo método para atualizar a role de um usuário
-  async updateUserRole(userId: number, role: RoleEnum): Promise<any> {
+  async updateUserRole(updateUserRoles: UpdateUserRolesDTO): Promise<any> {
     const user = await this.userEntity.findOne({
-      where: { id: userId },
+      where: { id: updateUserRoles.id },
       relations: ["role"],
     });
 
@@ -104,7 +122,9 @@ export class UserService {
       throw new CustomException("User Not Found!", HttpStatus.NOT_FOUND);
     }
 
-    const newRole = await this.roleEntity.findOne({ where: { role } });
+    const newRole = await this.roleEntity.findOne({
+      where: { role: updateUserRoles.role },
+    });
     if (!newRole) {
       throw new CustomException("Role Not Found!", HttpStatus.NOT_FOUND);
     }

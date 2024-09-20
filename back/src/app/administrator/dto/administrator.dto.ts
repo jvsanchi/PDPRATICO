@@ -13,7 +13,7 @@ export class AdministratorDto {
 
   @IsString()
   @Length(1, 255)
-  nome: string;
+  name: string;
 
   @IsEmail()
   @Length(1, 255)

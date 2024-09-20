@@ -5,6 +5,7 @@ import { UserModule } from "./user/user.module";
 import { ProductModule } from "./product/product.module";
 import { AuthModule } from "src/auth/auth.module";
 import { CollaboratorModule } from "./collaborator/collaborator.module";
+import { AdministratorModule } from "./administrator/administrador.module";
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { CollaboratorModule } from "./collaborator/collaborator.module";
     UserModule,
     ProductModule,
     CollaboratorModule,
+    AdministratorModule,
   ],
   controllers: [],
   providers: [],

@@ -10,11 +10,12 @@ import {
 import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
 import { UserService } from "./user.service";
 import { CreateUserDTO } from "./dto/create-user.dto";
-import { UpdateUserDTO } from "./dto/update-user.dto copy";
 import { RoleEnum } from "src/enum/roles.enum";
 import { RolesGuard } from "src/roles/roles.guard";
 import { JwtAuthGuard } from "src/auth/jwt-auth.guard";
 import { Roles } from "src/roles/roles.decorator";
+import { UpdateUserDTO } from "./dto/update-user.dto";
+import { UpdateUserRolesDTO } from "./dto/update-user-role.dto";
 
 @ApiTags("Users")
 @ApiBearerAuth()
@@ -22,8 +23,8 @@ import { Roles } from "src/roles/roles.decorator";
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(RoleEnum.MASTER)
+  // @UseGuards(JwtAuthGuard, RolesGuard)
+  // @Roles(RoleEnum.MASTER)
   @Get()
   async findAll(): Promise<any> {
     return this.userService.findAll();
@@ -48,5 +49,14 @@ export class UserController {
   @Delete()
   async disableUser(@Body("email") email: string): Promise<any> {
     return this.userService.disableUser(email);
+  }
+
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(RoleEnum.MASTER)
+  @Patch("updateRole")
+  async updateUserRole(
+    @Body() updateUserRoles: UpdateUserRolesDTO,
+  ): Promise<any> {
+    return this.userService.updateUserRole(updateUserRoles);
   }
 }
