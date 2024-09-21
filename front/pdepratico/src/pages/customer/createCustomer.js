@@ -1,10 +1,9 @@
-import React from 'react';
+import React from "react";
 
 const CadastrarClientes = () => {
   return (
-    <div>
-      <h2>Cadastrar Clientes</h2>
-      {/* Adicione aqui o formulário para cadastrar clientes */}
+    <div style={{ display: "flex" }}>
+      <h2>ESTOU EM CADASTRO DE CLIENTES</h2>
     </div>
   );
 };

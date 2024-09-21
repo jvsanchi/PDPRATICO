@@ -15,9 +15,9 @@ const Dashboard = () => {
   }, [token, navigate]);
 
   return (
-    <div className="d-flex">
+    <div style={{ display: "flex" }}>
       <SideBar />
-      <div className="flex-grow-1 p-4" style={{ marginLeft: "200px" }}>
+      <div style={{ flex: 1, padding: "20px" }}>
         <Outlet /> {/* Renderiza as rotas filhas */}
       </div>
     </div>

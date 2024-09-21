@@ -19,7 +19,7 @@ const hasPermission = (requiredRoles) => {
   return requiredRoles.includes(userRole); // Verifica se o papel do usuário está entre os permitidos
 };
 
-const ProtectedRoute = ({ element: Element, requiredRoles }) => {
+const ProtectedRoute = ({ component: Component, requiredRoles, ...rest }) => {
   // Verifica se o usuário está autenticado
   if (!isAuthenticated()) {
     return <Navigate to="/login" />;
@@ -31,7 +31,7 @@ const ProtectedRoute = ({ element: Element, requiredRoles }) => {
   }
 
   // Renderiza o componente protegido
-  return <Element />;
+  return <Component {...rest} />; // Renderiza o componente passando as props adicionais
 };
 
 export default ProtectedRoute;
