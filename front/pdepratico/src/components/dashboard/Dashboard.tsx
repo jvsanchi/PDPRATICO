@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Outlet } from "react-router-dom";
-import SideBar from "../../components/sideBar/SideBar";
+import SideBar from "../sideBar/SideBar";
 
 const Dashboard = () => {
   const navigate = useNavigate();

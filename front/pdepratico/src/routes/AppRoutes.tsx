@@ -10,6 +10,8 @@ import Dashboard from "../components/dashboard/Dashboard";
 import CadastrarClientes from "../pages/customer/createCustomer";
 import ListarClientes from "../pages/customer/findCustomer";
 
+import UserForm from "../pages/user/User";
+
 const AppRoutes = () => {
   return (
     <Routes>
@@ -40,10 +42,7 @@ const AppRoutes = () => {
           element={
             <ProtectedRoute
               component={ListarClientes}
-              requiredRoles={[
-                RoleEnum.ADMIN, // Apenas ADMIN e MASTER podem acessar Listar Clientes
-                RoleEnum.MASTER
-              ]}
+              requiredRoles={[RoleEnum.ADMIN, RoleEnum.MASTER, RoleEnum.USER]}
             />
           }
         />
@@ -56,6 +55,21 @@ const AppRoutes = () => {
               component={CadastrarClientes}
               requiredRoles={[
                 RoleEnum.ADMIN, // ADMIN, MASTER, USER e MANAGER podem acessar Cadastrar Clientes
+                RoleEnum.MASTER,
+                RoleEnum.USER,
+                RoleEnum.MANAGER,
+              ]}
+            />
+          }
+        />
+
+        <Route
+          path="/user/cadastrar"
+          element={
+            <ProtectedRoute
+              component={UserForm}
+              requiredRoles={[
+                RoleEnum.ADMIN,
                 RoleEnum.MASTER,
                 RoleEnum.USER,
                 RoleEnum.MANAGER,

@@ -7,7 +7,7 @@ const isAuthenticated = () => {
 };
 
 // Função para verificar o papel do usuário
-const hasPermission = (requiredRoles) => {
+const hasPermission = (requiredRoles: any) => {
   const userRole = localStorage.getItem("user_role");
 
   // Verifica se 'user_role' existe
@@ -19,7 +19,17 @@ const hasPermission = (requiredRoles) => {
   return requiredRoles.includes(userRole); // Verifica se o papel do usuário está entre os permitidos
 };
 
-const ProtectedRoute = ({ component: Component, requiredRoles, ...rest }) => {
+interface ProtectedRouteProps {
+  component: React.ComponentType<any>;
+  requiredRoles?: string[];
+}
+
+// Componente de rota protegida
+const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
+  component: Component,
+  requiredRoles,
+  ...rest
+}) => {
   // Verifica se o usuário está autenticado
   if (!isAuthenticated()) {
     return <Navigate to="/login" />;

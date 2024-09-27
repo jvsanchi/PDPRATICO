@@ -9,7 +9,7 @@ const Login = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     setError("");
 
@@ -18,7 +18,12 @@ const Login = () => {
       localStorage.setItem("access_token", data.access_token);
       navigate("/dashboard");
     } catch (err) {
-      setError("Falha no login " + err.message);
+      // Verifique se err é uma instância de Error antes de acessar suas propriedades
+      if (err instanceof Error) {
+        setError("Falha no login: " + err.message);
+      } else {
+        setError("Falha no login: Erro desconhecido.");
+      }
     }
   };
 
@@ -60,4 +65,5 @@ const Login = () => {
     </div>
   );
 };
+
 export default Login;
