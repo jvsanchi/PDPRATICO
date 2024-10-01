@@ -12,6 +12,7 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import type { MenuProps } from "antd";
 import RoleEnum from "../../enums/RoleEnum";
+import { BASE_URL } from "../../services/api.service";
 
 // Definir um tipo para os itens de menu
 type MenuItem = Required<MenuProps>["items"][number];
@@ -23,10 +24,23 @@ const SideBar = () => {
 
   // Recupera o papel do usuário do localStorage ao montar o componente
   useEffect(() => {
-    const role = localStorage.getItem("user_role");
-    console.log("ROLE", role);
-    setUserRole(role); // Atualiza o estado com o papel do usuário logado
-  }, []); // Executa apenas ao montar o componente (refresh da página)
+    const token = localStorage.getItem("access_token");
+
+    fetch(`${BASE_URL}/auth/profile`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setUserRole(data.role.role); // Atualiza o estado com o papel do usuário logado
+      })
+      .catch((error) => {
+        console.log(`Error -> ${JSON.stringify(error)}`);
+      });
+  }, []);
 
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
