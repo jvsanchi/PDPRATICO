@@ -1,5 +1,5 @@
 // src/auth/auth.controller.ts
-import { Controller, Post, Body, Request, UseGuards } from "@nestjs/common";
+import { Controller, Post, Body, Request, UseGuards, Get } from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import { JwtAuthGuard } from "./jwt-auth.guard";
 import { ApiTags } from "@nestjs/swagger";
@@ -15,9 +15,10 @@ export class AuthController {
     return this.authService.login(loginDto);
   }
 
+  // Atualize para usar GET para buscar o perfil do usuário autenticado
   @UseGuards(JwtAuthGuard)
-  @Post("profile")
+  @Get("profile")
   getProfile(@Request() req) {
-    return req.user; // Informações do usuário autenticado
+    return req.user; // Retorna as informações do usuário autenticado, incluindo o papel (role)
   }
 }

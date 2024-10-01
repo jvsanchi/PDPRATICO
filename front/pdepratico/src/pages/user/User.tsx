@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { User } from "../../interfaces/User";
+import { IUser } from "../../interfaces/User";
 import { createUser } from "../../services/customer/user.service";
 
 import { Button, Input } from "antd";
 
 const UserForm: React.FC = () => {
-  const [user, setUser] = useState<User>({
+  const [user, setUser] = useState<IUser>({
     name: "",
     email: "",
     password: "",

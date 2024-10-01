@@ -11,6 +11,7 @@ import CadastrarClientes from "../pages/customer/createCustomer";
 import ListarClientes from "../pages/customer/findCustomer";
 
 import UserForm from "../pages/user/User";
+import CreateAdministrator from "../pages/administrator/createAdminisrator";
 
 const AppRoutes = () => {
   return (
@@ -35,6 +36,22 @@ const AppRoutes = () => {
       >
         {/* Rota protegida para o Dashboard */}
         <Route path="/dashboard" element={<h2>Bem-vindo à Dashboard</h2>} />
+
+      {/* Rota protegida para Listar Administradores com permissões específicas */}
+          <Route
+          path="/administrator/listAll"
+          element={
+            <ProtectedRoute
+              component={CreateAdministrator}
+              // requiredRoles={[
+              //   RoleEnum.ADMIN,
+              //   RoleEnum.MASTER,
+              //   RoleEnum.USER,
+              //   RoleEnum.MANAGER,
+              // ]}
+            />
+          }
+        />
 
         {/* Rota protegida para Listar Clientes com permissões específicas */}
         <Route

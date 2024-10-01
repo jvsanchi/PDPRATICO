@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Menu } from "antd";
 import {
   HomeOutlined,
@@ -11,10 +11,22 @@ import {
 } from "@ant-design/icons";
 import { Link, useNavigate } from "react-router-dom";
 import type { MenuProps } from "antd";
+import RoleEnum from "../../enums/RoleEnum";
+
+// Definir um tipo para os itens de menu
+type MenuItem = Required<MenuProps>["items"][number];
 
 const SideBar = () => {
   const [collapsed, setCollapsed] = useState(false);
+  const [userRole, setUserRole] = useState<string | null>(null); // Estado para armazenar o papel do usuário
   const navigate = useNavigate();
+
+  // Recupera o papel do usuário do localStorage ao montar o componente
+  useEffect(() => {
+    const role = localStorage.getItem("user_role");
+    console.log("ROLE", role);
+    setUserRole(role); // Atualiza o estado com o papel do usuário logado
+  }, []); // Executa apenas ao montar o componente (refresh da página)
 
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
@@ -22,11 +34,12 @@ const SideBar = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("access_token");
+    localStorage.removeItem("user_role");
     navigate("/login");
   };
 
-  // Definindo os itens do menu como um array de objetos
-  const items: MenuProps["items"] = [
+  // Definindo os itens do menu como um array de objetos, condicionado ao papel do usuário
+  const items: MenuItem[] = [
     {
       key: "/dashboard",
       icon: <HomeOutlined />,
@@ -43,26 +56,50 @@ const SideBar = () => {
         </Link>
       ),
     },
-    // Usando um Divider para espaçamento
     {
       key: "divider-1",
       type: "divider",
     },
-    {
-      key: "clientes",
-      icon: <UserOutlined />,
-      label: "Clientes",
-      children: [
-        {
-          key: "/clientes/cadastrar",
-          label: <Link to="/clientes/cadastrar">Cadastrar</Link>,
-        },
-        {
-          key: "/clientes/listar",
-          label: <Link to="/clientes/listar">Listar</Link>,
-        },
-      ],
-    },
+    // Exibe o menu de Administrador apenas para ADMIN e MASTER
+    ...(userRole === RoleEnum.ADMIN || userRole === RoleEnum.MASTER
+      ? [
+          {
+            key: "administrator",
+            icon: <UserOutlined />,
+            label: "Administrador",
+            children: [
+              {
+                key: "/administrator/listAll",
+                label: <Link to="/administrator/listAll">Listar</Link>,
+              },
+            ],
+          },
+        ]
+      : []),
+    // Exibe o menu de Clientes para ADMIN, MASTER, USER, MANAGER
+    ...(userRole === RoleEnum.ADMIN ||
+    userRole === RoleEnum.MASTER ||
+    userRole === RoleEnum.USER ||
+    userRole === RoleEnum.MANAGER
+      ? [
+          {
+            key: "clientes",
+            icon: <UserOutlined />,
+            label: "Clientes",
+            children: [
+              {
+                key: "/clientes/cadastrar",
+                label: <Link to="/clientes/cadastrar">Cadastrar</Link>,
+              },
+              {
+                key: "/clientes/listar",
+                label: <Link to="/clientes/listar">Listar</Link>,
+              },
+            ],
+          },
+        ]
+      : []),
+    // Exibe o menu de Produtos para todos os papéis (sem restrições neste exemplo)
     {
       key: "produtos",
       icon: <AppstoreOutlined />,
@@ -70,40 +107,50 @@ const SideBar = () => {
       children: [
         {
           key: "/produtos/cadastrar",
-          label: <Link to="/#">Cadastrar</Link>,
+          label: <Link to="/produtos/cadastrar">Cadastrar</Link>,
         },
         {
           key: "/produtos/listar",
-          label: <Link to="/#">Listar</Link>,
+          label: <Link to="/produtos/listar">Listar</Link>,
         },
       ],
     },
-    {
-      key: "accountsPayable",
-      icon: <DollarOutlined />,
-      label: "Contas a Pagar",
-      children: [
-        {
-          key: "/accountsPayable/cadastrar",
-          label: <Link to="/#">Cadastrar</Link>,
-        },
-        {
-          key: "/accountsPayable/listar",
-          label: <Link to="#">Listar</Link>,
-        },
-      ],
-    },
-    {
-      key: "user",
-      icon: <UserOutlined />,
-      label: "Usuário",
-      children: [
-        {
-          key: "/user/cadastrar",
-          label: <Link to="/user/cadastrar">Cadastrar</Link>,
-        },
-      ],
-    },
+    // Exibe o menu de Contas a Pagar para ADMIN e MASTER
+    ...(userRole === RoleEnum.ADMIN || userRole === RoleEnum.MASTER
+      ? [
+          {
+            key: "accountsPayable",
+            icon: <DollarOutlined />,
+            label: "Contas a Pagar",
+            children: [
+              {
+                key: "/accountsPayable/cadastrar",
+                label: <Link to="/accountsPayable/cadastrar">Cadastrar</Link>,
+              },
+              {
+                key: "/accountsPayable/listar",
+                label: <Link to="/accountsPayable/listar">Listar</Link>,
+              },
+            ],
+          },
+        ]
+      : []),
+    // Exibe o menu de Usuário para ADMIN e MASTER
+    ...(userRole === RoleEnum.ADMIN || userRole === RoleEnum.MASTER
+      ? [
+          {
+            key: "user",
+            icon: <UserOutlined />,
+            label: "Usuário",
+            children: [
+              {
+                key: "/user/cadastrar",
+                label: <Link to="/user/cadastrar">Cadastrar</Link>,
+              },
+            ],
+          },
+        ]
+      : []),
   ];
 
   return (
@@ -145,7 +192,6 @@ const SideBar = () => {
         items={items}
       />
 
-      {/* Botão "Sair" fixo na parte inferior */}
       <div
         style={{
           padding: collapsed ? "10px 0" : "10px",

@@ -1,7 +1,7 @@
 import { BASE_URL } from "../api.service";
-import { User } from "../../interfaces/User";
+import { IUser } from "../../interfaces/User";
 
-export const findUsers = async (): Promise<User[]> => {
+export const findUsers = async (): Promise<IUser[]> => {
   try {
     const response = await fetch(`${BASE_URL}/user`);
     if (!response.ok) {
@@ -14,7 +14,7 @@ export const findUsers = async (): Promise<User[]> => {
   }
 };
 
-export const createUser = async (user: User): Promise<User> => {
+export const createUser = async (user: IUser): Promise<IUser> => {
   try {
     const response = await fetch(`${BASE_URL}/user/create`, {
       method: "POST",
