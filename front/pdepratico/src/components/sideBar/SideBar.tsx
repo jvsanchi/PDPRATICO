@@ -22,7 +22,6 @@ const SideBar = () => {
   const [userRole, setUserRole] = useState<string | null>(null); // Estado para armazenar o papel do usuário
   const navigate = useNavigate();
 
-  // Recupera o papel do usuário do localStorage ao montar o componente
   useEffect(() => {
     const token = localStorage.getItem("access_token");
 
@@ -75,21 +74,21 @@ const SideBar = () => {
       type: "divider",
     },
     // Exibe o menu de Administrador apenas para ADMIN e MASTER
-    ...(userRole === RoleEnum.ADMIN || userRole === RoleEnum.MASTER
-      ? [
-          {
-            key: "administrator",
-            icon: <UserOutlined />,
-            label: "Administrador",
-            children: [
-              {
-                key: "/administrator/listAll",
-                label: <Link to="/administrator/listAll">Listar</Link>,
-              },
-            ],
-          },
-        ]
-      : []),
+    // ...(userRole === RoleEnum.ADMIN || userRole === RoleEnum.MASTER
+    //   ? [
+    //       {
+    //         key: "administrator",
+    //         icon: <UserOutlined />,
+    //         label: "Administrador",
+    //         children: [
+    //           {
+    //             key: "/administrator/listAll",
+    //             label: <Link to="/administrator/listAll">Listar</Link>,
+    //           },
+    //         ],
+    //       },
+    //     ]
+    //   : []),
     // Exibe o menu de Clientes para ADMIN, MASTER, USER, MANAGER
     ...(userRole === RoleEnum.ADMIN ||
     userRole === RoleEnum.MASTER ||
@@ -160,6 +159,10 @@ const SideBar = () => {
               {
                 key: "/user/cadastrar",
                 label: <Link to="/user/cadastrar">Cadastrar</Link>,
+              },
+               {
+                key: "/user/listar",
+                label: <Link to="/user/listar">Listar</Link>,
               },
             ],
           },

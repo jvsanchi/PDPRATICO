@@ -27,14 +27,14 @@ export class UserService {
   async findAll(): Promise<UserEntity[]> {
     return this.userEntity.find({
       where: { activated: true },
-      relations: ["role", "administrator"],
+      relations: ["role"],
     });
   }
 
   async findByEmail(email: string): Promise<any> {
     const findEmail = await this.userEntity.findOne({
       where: { email },
-      relations: ["role", "administrator"],
+      relations: ["role"],
     });
     return findEmail;
   }
@@ -42,22 +42,22 @@ export class UserService {
   async findById(id: number): Promise<UserEntity | undefined> {
     return this.userEntity.findOne({
       where: { id },
-      relations: ["role", "administrator"],
+      relations: ["role"],
     });
   }
 
   async createUser(createUser: CreateUserDTO): Promise<any> {
-    const adminInstance = await this.adminRepository.findOne({
-      where: { id: createUser.administratorId },
-      select: { id: true },
-    });
+    // const adminInstance = await this.adminRepository.findOne({
+    //   where: { id: createUser.administratorId },
+    //   select: { id: true },
+    // });
 
-    if (!adminInstance) {
-      throw new CustomException(
-        "user without permission",
-        HttpStatus.FORBIDDEN,
-      );
-    }
+    // if (!adminInstance) {
+    //   throw new CustomException(
+    //     "user without permission",
+    //     HttpStatus.FORBIDDEN,
+    //   );
+    // }
 
     const hashedPassword = await BcryptUtil.hashPassword(createUser.password);
 
@@ -72,7 +72,7 @@ export class UserService {
       created_at: new Date(),
       updated_at: new Date(),
       password: hashedPassword,
-      administrator: adminInstance,
+      //  administrator: adminInstance,
       role: adminRole,
     });
 

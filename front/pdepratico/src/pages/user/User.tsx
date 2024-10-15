@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { IUser } from "../../interfaces/User";
-import { createUser } from "../../services/customer/user.service";
-
-import { Button, Input } from "antd";
+import { createUser } from "../../services/user/user.service";
+import { Card, Button, Form, Input, message } from "antd";
 
 const UserForm: React.FC = () => {
   const [user, setUser] = useState<IUser>({
@@ -10,6 +9,8 @@ const UserForm: React.FC = () => {
     email: "",
     password: "",
   });
+
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
 
   // Função para lidar com mudanças nos campos do formulário
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -20,60 +21,81 @@ const UserForm: React.FC = () => {
     }));
   };
 
+  const handleConfirmPasswordChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setConfirmPassword(e.target.value);
+  };
+
   // Função para lidar com o envio do formulário
-  const handleSudmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleSubmit = async (values: any) => {
+    if (user.password !== confirmPassword) {
+      message.error("As senhas não coincidem!");
+      return;
+    }
 
     try {
       const newUser = await createUser(user);
-      console.log(`usuario cadastrado ${newUser}`);
+      message.success(`Usuário cadastrado: ${newUser.name}`);
+
+      // Limpa os campos após o cadastro
+      setUser({ name: "", email: "", password: "" });
+      setConfirmPassword("");
     } catch (error) {
-      console.error(`Error ao cadastrar usuário:  ${error}`);
+      message.error(`Erro ao cadastrar usuário: ${error}`);
     }
   };
 
   return (
-    <div>
-      <form onSubmit={handleSudmit}>
-        <div>
-          <label htmlFor="name">Nome:</label>
-          <input
+    <Card title="Cadastrar Usuário" style={{ width: 400 }}>
+      <Form layout="vertical" onFinish={handleSubmit}>
+        <Form.Item label="Nome" required>
+          <Input
             type="text"
-            id="name"
             name="name"
             value={user.name}
             onChange={handleChange}
+            required
           />
-        </div>
+        </Form.Item>
 
-        <div>
-          <label htmlFor="email">Email:</label>
-          <input
+        <Form.Item label="Email" required>
+          <Input
             type="email"
-            id="email"
             name="email"
             value={user.email}
             onChange={handleChange}
+            required
           />
-        </div>
+        </Form.Item>
 
-        <div>
-          <label htmlFor="password">Password:</label>
+        <Form.Item label="Senha" required>
           <Input.Password
-            placeholder="Password"
-            type="password"
-            id="password"
+            placeholder="Senha"
             name="password"
             value={user.password}
             onChange={handleChange}
+            required
           />
-        </div>
+        </Form.Item>
 
-        <Button type="primary" htmlType="submit">
-          Cadastrar
-        </Button>
-      </form>
-    </div>
+        <Form.Item label="Confirmar Senha" required>
+          <Input.Password
+            placeholder="Confirmar Senha"
+            value={confirmPassword}
+            onChange={handleConfirmPasswordChange}
+            required
+          />
+        </Form.Item>
+
+        <Form.Item>
+          <Button type="primary" htmlType="submit" block>
+            Cadastrar
+          </Button>
+        </Form.Item>
+      </Form>
+    </Card>
   );
 };
+
 export default UserForm;

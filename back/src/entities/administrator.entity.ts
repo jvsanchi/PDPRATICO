@@ -38,13 +38,4 @@ export class AdministratorEntity {
   })
   // Data de atualização
   updated_at: Date;
-
-  // Relacionamento com RoleEntity
-  @ManyToOne(() => RoleEntity, (role) => role.admin)
-  @JoinColumn({ name: "role_id" })
-  role: RoleEntity;
-
-  // Relacionamento com UserEntity
-  @OneToMany(() => UserEntity, (user) => user.administrator)
-  users: UserEntity[];
 }

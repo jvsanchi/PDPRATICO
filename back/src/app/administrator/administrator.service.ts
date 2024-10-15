@@ -45,7 +45,7 @@ export class AdministratorService {
       email: createAdmin.email,
       password: hashedPassword,
       activated: true,
-      role: adminRole,
+      //  role: adminRole,
       created_at: new Date(),
       updated_at: new Date(),
     });

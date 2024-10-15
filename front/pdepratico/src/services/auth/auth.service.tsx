@@ -26,8 +26,6 @@ export const login = async (email: string, password: string) => {
     // Decodifique o token com o tipo esperado
     const decodedToken = jwtDecode<DecodedToken>(token);
 
-    console.log(decodedToken);
-
     if (
       decodedToken &&
       typeof decodedToken === "object" &&

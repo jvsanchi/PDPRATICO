@@ -62,7 +62,8 @@ export class UserEntity {
   collaborators: CollaboratorEntity[];
 
   // Relacionamento com AdministratorEntity
-  @ManyToOne(() => AdministratorEntity, (administrator) => administrator.users)
-  @JoinColumn({ name: "administrator_id" })
-  administrator: AdministratorEntity;
+  //   @ManyToOne(() => AdministratorEntity, (administrator) => administrator.users)
+  //   @JoinColumn({ name: "administrator_id" })
+  //   administrator: AdministratorEntity;
+  // }
 }

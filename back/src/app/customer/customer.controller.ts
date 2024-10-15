@@ -23,14 +23,14 @@ export class CustomerController {
   constructor(readonly customerService: CustomerService) {}
 
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(RoleEnum.MASTER, RoleEnum.ADMIN, RoleEnum.COLLABORATOR)
+  @Roles(RoleEnum.MASTER, RoleEnum.ADMIN, RoleEnum.COLLABORATOR, RoleEnum.USER)
   @Get()
   async findAll(): Promise<any> {
     return this.customerService.findAll();
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(RoleEnum.MASTER, RoleEnum.ADMIN, RoleEnum.COLLABORATOR)
+  @Roles(RoleEnum.USER, RoleEnum.ADMIN, RoleEnum.COLLABORATOR)
   @Post()
   async createCustomer(
     @Body() createCustomer: CreateCustomerDTO,

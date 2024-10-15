@@ -7,11 +7,14 @@ import RoleEnum from "../enums/RoleEnum";
 
 import Dashboard from "../components/dashboard/Dashboard";
 
+
 import CadastrarClientes from "../pages/customer/createCustomer";
 import ListarClientes from "../pages/customer/findCustomer";
 
 import UserForm from "../pages/user/User";
 import CreateAdministrator from "../pages/administrator/createAdminisrator";
+import UserList from "../pages/user/User_list_all";
+import DashboardStats from "../components/dashboard/DashboardStats";
 
 const AppRoutes = () => {
   return (
@@ -34,11 +37,13 @@ const AppRoutes = () => {
           />
         }
       >
-        {/* Rota protegida para o Dashboard */}
+        {/* Rota protegida para o Dashboard 
         <Route path="/dashboard" element={<h2>Bem-vindo à Dashboard</h2>} />
-
-      {/* Rota protegida para Listar Administradores com permissões específicas */}
-          <Route
+*/}
+        <Route path="/dashboard" element={<DashboardStats />} />{" "}
+        {/* Rota para o Dashboard com Estatísticas */}
+        {/* Rota protegida para Listar Administradores com permissões específicas */}
+        <Route
           path="/administrator/listAll"
           element={
             <ProtectedRoute
@@ -52,7 +57,6 @@ const AppRoutes = () => {
             />
           }
         />
-
         {/* Rota protegida para Listar Clientes com permissões específicas */}
         <Route
           path="/clientes/listar"
@@ -63,7 +67,6 @@ const AppRoutes = () => {
             />
           }
         />
-
         {/* Rota protegida para Cadastrar Clientes com permissões diferentes */}
         <Route
           path="/clientes/cadastrar"
@@ -79,7 +82,6 @@ const AppRoutes = () => {
             />
           }
         />
-
         <Route
           path="/user/cadastrar"
           element={
@@ -94,7 +96,20 @@ const AppRoutes = () => {
             />
           }
         />
-
+        <Route
+          path="/user/listar"
+          element={
+            <ProtectedRoute
+              component={UserList}
+              // requiredRoles={[
+              //   RoleEnum.ADMIN,
+              //   RoleEnum.MASTER,
+              //   RoleEnum.USER,
+              //   RoleEnum.MANAGER,
+              // ]}
+            />
+          }
+        />
         {/* Aqui você pode adicionar mais rotas protegidas conforme necessário */}
       </Route>
 
