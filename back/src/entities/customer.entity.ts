@@ -1,4 +1,10 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
 import { UserEntity } from "./user.entity";
 
 @Entity({ name: "customer" })
@@ -7,7 +13,8 @@ export class CustomerEntity {
   id: number;
 
   @ManyToOne(() => UserEntity, (user) => user.customers)
-  user: UserEntity;
+  @JoinColumn({ name: "userId" })
+  user: UserEntity; // Relaciona o cliente com o usuário
 
   @Column({ name: "name" })
   name: string;

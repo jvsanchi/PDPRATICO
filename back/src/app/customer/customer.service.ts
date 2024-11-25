@@ -18,7 +18,6 @@ export class CustomerService {
   async findAll(): Promise<any> {
     return this.customer.find({ where: { activated: true } });
   }
-
   async createCustome(createCustomer: CreateCustomerDTO): Promise<any> {
     const verifyCustomer = await this.customer.findOne({
       where: { email: createCustomer.email },
@@ -32,17 +31,8 @@ export class CustomerService {
     }
 
     const create = this.customer.create({
-      name: createCustomer.name,
-      code: createCustomer.code,
-      observations: createCustomer.observations,
-      dateOfBirth: createCustomer.dateOfBirth,
-      rg: createCustomer.rg,
-      ie: createCustomer.ie,
-      cpf: createCustomer.cpf,
-      cnpj: createCustomer.cnpj,
-      address: createCustomer.address,
-      telephone: createCustomer.telephone,
-      email: createCustomer.email,
+      ...createCustomer,
+      user: { id: createCustomer.userId },
       activated: true,
       created_at: new Date(),
       updated_at: new Date(),
