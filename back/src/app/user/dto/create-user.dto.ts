@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsNotEmpty } from "class-validator";
+import { IsNotEmpty, IsString } from "class-validator";
 import { AdministratorEntity } from "src/entities/administrator.entity";
 
 export class CreateUserDTO {
@@ -8,6 +8,10 @@ export class CreateUserDTO {
 
   @ApiProperty()
   email: string;
+
+  @IsNotEmpty()
+  @IsString()
+  role: string; // Campo para a role
 
   @ApiProperty()
   password: string;

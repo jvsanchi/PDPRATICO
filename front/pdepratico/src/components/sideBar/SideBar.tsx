@@ -13,6 +13,7 @@ import { Link, useNavigate } from "react-router-dom";
 import type { MenuProps } from "antd";
 import RoleEnum from "../../enums/RoleEnum";
 import { BASE_URL } from "../../services/api.service";
+import Logo from "../../assets/PDPRATICUM3.png"; // Importa o logo
 
 // Definir um tipo para os itens de menu
 type MenuItem = Required<MenuProps>["items"][number];
@@ -73,23 +74,6 @@ const SideBar = () => {
       key: "divider-1",
       type: "divider",
     },
-    // Exibe o menu de Administrador apenas para ADMIN e MASTER
-    // ...(userRole === RoleEnum.ADMIN || userRole === RoleEnum.MASTER
-    //   ? [
-    //       {
-    //         key: "administrator",
-    //         icon: <UserOutlined />,
-    //         label: "Administrador",
-    //         children: [
-    //           {
-    //             key: "/administrator/listAll",
-    //             label: <Link to="/administrator/listAll">Listar</Link>,
-    //           },
-    //         ],
-    //       },
-    //     ]
-    //   : []),
-    // Exibe o menu de Clientes para ADMIN, MASTER, USER, MANAGER
     ...(userRole === RoleEnum.ADMIN ||
     userRole === RoleEnum.MASTER ||
     userRole === RoleEnum.USER ||
@@ -112,7 +96,6 @@ const SideBar = () => {
           },
         ]
       : []),
-    // Exibe o menu de Produtos para todos os papéis (sem restrições neste exemplo)
     {
       key: "produtos",
       icon: <AppstoreOutlined />,
@@ -128,7 +111,6 @@ const SideBar = () => {
         },
       ],
     },
-    // Exibe o menu de Contas a Pagar para ADMIN e MASTER
     ...(userRole === RoleEnum.ADMIN || userRole === RoleEnum.MASTER
       ? [
           {
@@ -148,7 +130,6 @@ const SideBar = () => {
           },
         ]
       : []),
-    // Exibe o menu de Usuário para ADMIN e MASTER
     ...(userRole === RoleEnum.ADMIN || userRole === RoleEnum.MASTER
       ? [
           {
@@ -160,7 +141,7 @@ const SideBar = () => {
                 key: "/user/cadastrar",
                 label: <Link to="/user/cadastrar">Cadastrar</Link>,
               },
-               {
+              {
                 key: "/user/listar",
                 label: <Link to="/user/listar">Listar</Link>,
               },
@@ -179,26 +160,35 @@ const SideBar = () => {
         flexDirection: "column",
         justifyContent: "space-between",
         backgroundColor: "#001529",
+        transition: "width 0.3s ease",
       }}
     >
       <div
         style={{
           display: "flex",
-          justifyContent: "space-between",
           alignItems: "center",
           padding: "10px",
+          justifyContent: collapsed ? "center" : "space-between",
         }}
       >
-        <span style={{ color: "white", fontSize: "16px", marginLeft: "10px" }}>
-          {!collapsed ? "PDPRATICO" : "PDP"}
-        </span>
-        <div onClick={toggleCollapsed} style={{ cursor: "pointer" }}>
-          {collapsed ? (
-            <MenuUnfoldOutlined style={{ color: "white" }} />
-          ) : (
+        <img
+          src={Logo}
+          alt="PDPRATICUM"
+          style={{
+            height: collapsed ? "30px" : "40px", // Reduz o tamanho no estado colapsado
+            transition: "height 0.3s ease",
+          }}
+        />
+        {!collapsed && (
+          <div onClick={toggleCollapsed} style={{ cursor: "pointer" }}>
             <MenuFoldOutlined style={{ color: "white" }} />
-          )}
-        </div>
+          </div>
+        )}
+        {collapsed && (
+          <div onClick={toggleCollapsed} style={{ cursor: "pointer" }}>
+            <MenuUnfoldOutlined style={{ color: "white" }} />
+          </div>
+        )}
       </div>
 
       <Menu

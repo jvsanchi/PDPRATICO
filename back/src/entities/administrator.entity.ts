@@ -36,6 +36,5 @@ export class AdministratorEntity {
   @Column({
     name: "updated_at",
   })
-  // Data de atualização
   updated_at: Date;
 }

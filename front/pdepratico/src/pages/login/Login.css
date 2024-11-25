@@ -16,7 +16,7 @@ body {
 
 .login-image {
   flex: 5; /* 80% do espaço disponível */
-  background-image: url("../../assets/login-background.jpg"); /* Substitua pelo caminho da sua imagem */
+  background-image: url("../../assets/PDPRATICUM2.png"); /* Substitua pelo caminho da sua imagem */
   background-size: cover; /* A imagem cobre toda a área */
   background-position: center; /* Centraliza a imagem */
 }

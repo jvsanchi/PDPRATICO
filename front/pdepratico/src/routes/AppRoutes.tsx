@@ -90,7 +90,7 @@ const AppRoutes = () => {
               requiredRoles={[
                 RoleEnum.ADMIN,
                 RoleEnum.MASTER,
-                RoleEnum.USER,
+            //    RoleEnum.USER,
                 RoleEnum.MANAGER,
               ]}
             />

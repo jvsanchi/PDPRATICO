@@ -47,24 +47,16 @@ export class UserService {
   }
 
   async createUser(createUser: CreateUserDTO): Promise<any> {
-    // const adminInstance = await this.adminRepository.findOne({
-    //   where: { id: createUser.administratorId },
-    //   select: { id: true },
-    // });
-
-    // if (!adminInstance) {
-    //   throw new CustomException(
-    //     "user without permission",
-    //     HttpStatus.FORBIDDEN,
-    //   );
-    // }
-
     const hashedPassword = await BcryptUtil.hashPassword(createUser.password);
 
-    // Atribui o papel de ADMIN ao usuário por padrão
-    const adminRole = await this.roleEntity.findOne({
-      where: { role: RoleEnum.USER },
+    // Busca o papel especificado na requisição
+    const userRole = await this.roleEntity.findOne({
+      where: { role: createUser.role },
     });
+
+    if (!userRole) {
+      throw new CustomException("Role Not Found!", HttpStatus.NOT_FOUND);
+    }
 
     const create = this.userEntity.create({
       name: createUser.name,
@@ -72,8 +64,7 @@ export class UserService {
       created_at: new Date(),
       updated_at: new Date(),
       password: hashedPassword,
-      //  administrator: adminInstance,
-      role: adminRole,
+      role: userRole, // Associa a role ao usuário
     });
 
     return await this.userEntity.save(create);
