@@ -7,16 +7,15 @@ const isAuthenticated = () => {
 };
 
 // Função para verificar o papel do usuário
-const hasPermission = (requiredRoles: any) => {
+const hasPermission = (requiredRoles: string[]) => {
   const userRole = localStorage.getItem("user_role");
 
-  // Verifica se 'user_role' existe
   if (!userRole) {
     console.error("O campo 'user_role' não foi encontrado no localStorage.");
-    return false; // Se user_role não estiver definido, retorna false
+    return false;
   }
 
-  return requiredRoles.includes(userRole); // Verifica se o papel do usuário está entre os permitidos
+  return requiredRoles.includes(userRole); // Comparação entre strings
 };
 
 interface ProtectedRouteProps {

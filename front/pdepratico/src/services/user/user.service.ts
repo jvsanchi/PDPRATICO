@@ -1,4 +1,3 @@
-// src/services/customer/user.service.js
 import { BASE_URL } from "../api.service";
 import { IUser } from "../../interfaces/User";
 
@@ -9,8 +8,9 @@ export const createUser = async (user: IUser): Promise<IUser> => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`, // Adicione o token
       },
-      body: JSON.stringify(user), // Move o body para cá
+      body: JSON.stringify(user),
     });
 
     if (!response.ok) {
@@ -27,13 +27,40 @@ export const createUser = async (user: IUser): Promise<IUser> => {
 // Função para buscar todos os usuários
 export const findUsers = async (): Promise<IUser[]> => {
   try {
-    const response = await fetch(`${BASE_URL}/user`);
+    const response = await fetch(`${BASE_URL}/user`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`, // Adicione o token
+      },
+    });
     if (!response.ok) {
       throw new Error(`Erro ao buscar usuários!`);
     }
     return await response.json();
   } catch (error) {
     console.error(`Erro ao buscar usuários: ${error}`);
+    throw error;
+  }
+};
+
+// Função para atualizar um usuário
+export const updateUser = async (user: IUser): Promise<IUser> => {
+  try {
+    const response = await fetch(`${BASE_URL}/user`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`, // Envie o token no cabeçalho
+      },
+      body: JSON.stringify(user),
+    });
+
+    if (!response.ok) {
+      throw new Error("Erro ao atualizar usuário");
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error(`Erro ao atualizar usuário SERVICE: ${error}`);
     throw error;
   }
 };

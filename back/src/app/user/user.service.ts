@@ -29,8 +29,6 @@ export class UserService {
       where: { activated: true },
       relations: ["role"],
     });
-
-    console.log(findUsers);
     return findUsers;
   }
 
@@ -83,8 +81,14 @@ export class UserService {
       throw new CustomException("User Not Found!", HttpStatus.NOT_FOUND);
     }
 
+    const newRole = await this.roleEntity.findOne({
+      where: { role: updateUserDTO.role },
+    });
+
     update.email = updateUserDTO.email;
     update.name = updateUserDTO.name;
+    update.password = updateUserDTO.password;
+    update.role = newRole;
 
     return await this.userEntity.save(update);
   }

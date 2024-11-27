@@ -1,6 +1,6 @@
 import axios from "axios";
-import { jwtDecode } from "jwt-decode"; // Corrige a importação como exportação nomeada
-import { BASE_URL } from "../api.service"; // Usa a URL importada de api.service.js
+import { jwtDecode } from "jwt-decode"; // Importação correta
+import { BASE_URL } from "../api.service"; // URL base para chamadas à API
 
 // Defina a interface para o tipo esperado do token JWT decodificado
 interface DecodedToken {
@@ -33,8 +33,10 @@ export const login = async (email: string, password: string) => {
       typeof decodedToken.roles === "object" &&
       typeof decodedToken.roles.role === "string"
     ) {
+      // Armazena o papel do usuário e o token no localStorage
       localStorage.setItem("user_role", decodedToken.roles.role);
       localStorage.setItem("access_token", token);
+      console.log("Token armazenado com sucesso:", token);
     } else {
       console.error(
         "Erro: O campo 'role' não foi encontrado no token JWT.",
@@ -46,15 +48,12 @@ export const login = async (email: string, password: string) => {
     return data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      // Verifica se o erro é um erro do Axios
       console.error("Erro no processo de login:", error.response?.data.message);
       throw new Error(error.response?.data.message || "Erro ao fazer login");
     } else if (error instanceof Error) {
-      // Verifica se é uma instância de Error
       console.error("Erro no processo de login:", error.message);
       throw new Error(error.message);
     } else {
-      // Caso seja um tipo desconhecido
       console.error("Erro desconhecido no processo de login:", error);
       throw new Error("Erro desconhecido ao fazer login");
     }

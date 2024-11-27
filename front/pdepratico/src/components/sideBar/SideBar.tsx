@@ -35,7 +35,7 @@ const SideBar = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        setUserRole(data.role.role); // Atualiza o estado com o papel do usuário logado
+        setUserRole(data.role); // Atualiza o estado com o papel do usuário logado
       })
       .catch((error) => {
         console.log(`Error -> ${JSON.stringify(error)}`);
@@ -52,6 +52,7 @@ const SideBar = () => {
     navigate("/login");
   };
 
+  // Definindo os itens do menu como um array de objetos, condicionado ao papel do usuário
   // Definindo os itens do menu como um array de objetos, condicionado ao papel do usuário
   const items: MenuItem[] = [
     {
@@ -74,6 +75,7 @@ const SideBar = () => {
       key: "divider-1",
       type: "divider",
     },
+    // Clientes (Disponível para ADMIN, MASTER, USER, MANAGER)
     ...(userRole === RoleEnum.ADMIN ||
     userRole === RoleEnum.MASTER ||
     userRole === RoleEnum.USER ||
@@ -97,6 +99,11 @@ const SideBar = () => {
         ]
       : []),
     {
+      key: "divider-2",
+      type: "divider",
+    },
+    // Produtos (Disponível para todos os papéis)
+    {
       key: "produtos",
       icon: <AppstoreOutlined />,
       label: "Produtos",
@@ -111,6 +118,11 @@ const SideBar = () => {
         },
       ],
     },
+    {
+      key: "divider-3",
+      type: "divider",
+    },
+    // Contas a Pagar (Disponível para ADMIN e MASTER)
     ...(userRole === RoleEnum.ADMIN || userRole === RoleEnum.MASTER
       ? [
           {
@@ -130,6 +142,11 @@ const SideBar = () => {
           },
         ]
       : []),
+    {
+      key: "divider-4",
+      type: "divider",
+    },
+    // Usuários (Disponível para ADMIN e MASTER)
     ...(userRole === RoleEnum.ADMIN || userRole === RoleEnum.MASTER
       ? [
           {

@@ -5,6 +5,7 @@ import {
   Get,
   Patch,
   Post,
+  Put,
   UseGuards,
 } from "@nestjs/common";
 import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
@@ -38,7 +39,7 @@ export class UserController {
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(RoleEnum.MASTER)
+  @Roles(RoleEnum.MASTER, RoleEnum.ADMIN)
   @Patch()
   async updateUser(@Body() updateUserDTO: UpdateUserDTO): Promise<any> {
     return this.userService.updateUser(updateUserDTO);
