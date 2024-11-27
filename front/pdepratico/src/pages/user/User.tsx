@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { IUser } from "../../interfaces/User";
 import { createUser } from "../../services/user/user.service";
-import { Card, Button, Form, Input, message, Select } from "antd";
+import { Card, Button, Form, Input, message, Select, Row, Col } from "antd";
+import type { InputRef } from "antd"; // Importa o tipo correto para a referência
 import { BASE_URL } from "../../services/api.service";
 
 const { Option } = Select;
@@ -16,6 +17,8 @@ const UserForm: React.FC = () => {
 
   const [roles, setRoles] = useState<string[]>([]); // Estado para armazenar as roles disponíveis
   const [confirmPassword, setConfirmPassword] = useState<string>("");
+
+  const nameInputRef = useRef<InputRef | null>(null); // Usa o tipo correto InputRef
 
   // Função para buscar as roles disponíveis no back-end
   useEffect(() => {
@@ -66,10 +69,11 @@ const UserForm: React.FC = () => {
     }
   };
 
-  // Função para limpar os campos do formulário
+  // Função para limpar os campos do formulário e focar no primeiro campo
   const handleCancel = () => {
     setUser({ name: "", email: "", password: "", role: "" });
     setConfirmPassword("");
+    nameInputRef.current?.focus(); // Retorna o foco para o campo "Nome"
   };
 
   return (
@@ -98,77 +102,97 @@ const UserForm: React.FC = () => {
         }}
       >
         <Form layout="vertical" onFinish={handleSubmit}>
-          <Form.Item label="Nome" required>
-            <Input
-              type="text"
-              name="name"
-              value={user.name}
-              onChange={handleChange}
-              required
-            />
-          </Form.Item>
+          {/* Campos alinhados em duas colunas */}
+          <Row gutter={16}>
+            <Col span={12}>
+              <Form.Item label="Nome" required>
+                <Input
+                  ref={nameInputRef} // Conecta a referência ao campo "Nome"
+                  type="text"
+                  name="name"
+                  value={user.name}
+                  onChange={handleChange}
+                  required
+                />
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item label="Email" required>
+                <Input
+                  type="email"
+                  name="email"
+                  value={user.email}
+                  onChange={handleChange}
+                  required
+                />
+              </Form.Item>
+            </Col>
+          </Row>
 
-          <Form.Item label="Email" required>
-            <Input
-              type="email"
-              name="email"
-              value={user.email}
-              onChange={handleChange}
-              required
-            />
-          </Form.Item>
+          <Row gutter={16}>
+            <Col span={12}>
+              <Form.Item label="Senha" required>
+                <Input.Password
+                  placeholder="Senha"
+                  name="password"
+                  value={user.password}
+                  onChange={handleChange}
+                  required
+                />
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item label="Confirmar Senha" required>
+                <Input.Password
+                  placeholder="Confirmar Senha"
+                  value={confirmPassword}
+                  onChange={handleConfirmPasswordChange}
+                  required
+                />
+              </Form.Item>
+            </Col>
+          </Row>
 
-          <Form.Item label="Senha" required>
-            <Input.Password
-              placeholder="Senha"
-              name="password"
-              value={user.password}
-              onChange={handleChange}
-              required
-            />
-          </Form.Item>
+          <Row>
+            <Col span={24}>
+              <Form.Item label="Permissão" required>
+                <Select
+                  placeholder="Selecione a permissão"
+                  value={user.role}
+                  onChange={handleRoleChange}
+                >
+                  {roles.map((role) => (
+                    <Option key={role} value={role}>
+                      {role}
+                    </Option>
+                  ))}
+                </Select>
+              </Form.Item>
+            </Col>
+          </Row>
 
-          <Form.Item label="Confirmar Senha" required>
-            <Input.Password
-              placeholder="Confirmar Senha"
-              value={confirmPassword}
-              onChange={handleConfirmPasswordChange}
-              required
-            />
-          </Form.Item>
-
-          <Form.Item label="Permissão" required>
-            <Select
-              placeholder="Selecione a permissão"
-              value={user.role}
-              onChange={handleRoleChange}
-            >
-              {roles.map((role) => (
-                <Option key={role} value={role}>
-                  {role}
-                </Option>
-              ))}
-            </Select>
-          </Form.Item>
-
-          <Form.Item>
-            <Button type="primary" htmlType="submit" block>
-              Cadastrar
-            </Button>
-          </Form.Item>
-
-          {/* Botão de Cancelar */}
-          <Form.Item>
-            <Button
-              type="primary"
-              danger
-              block
-              onClick={handleCancel}
-              style={{ marginTop: "10px" }}
-            >
-              Cancelar
-            </Button>
-          </Form.Item>
+          {/* Botões centralizados */}
+          <Row justify="center" gutter={16}>
+            <Col>
+              <Button
+                type="primary"
+                htmlType="submit"
+                style={{ minWidth: "100px" }}
+              >
+                Cadastrar
+              </Button>
+            </Col>
+            <Col>
+              <Button
+                type="primary"
+                danger
+                onClick={handleCancel}
+                style={{ minWidth: "100px" }}
+              >
+                Cancelar
+              </Button>
+            </Col>
+          </Row>
         </Form>
       </Card>
     </div>

@@ -27,7 +27,6 @@ export class RolesGuard implements CanActivate {
 
     const token = authorization.replace("Bearer ", "");
     const user = this.jwtService.decode(token) as any;
-    console.log("Decoded user:", user);
 
     if (!user || !user.roles) {
       return false;

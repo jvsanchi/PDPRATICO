@@ -25,10 +25,13 @@ export class UserService {
   ) {}
 
   async findAll(): Promise<UserEntity[]> {
-    return this.userEntity.find({
+    const findUsers = await this.userEntity.find({
       where: { activated: true },
       relations: ["role"],
     });
+
+    console.log(findUsers);
+    return findUsers;
   }
 
   async findByEmail(email: string): Promise<any> {
