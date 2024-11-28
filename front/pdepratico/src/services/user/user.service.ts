@@ -64,3 +64,24 @@ export const updateUser = async (user: IUser, token: any): Promise<IUser> => {
     throw error;
   }
 };
+
+// Função para deletar um usuário
+export const deleteUser = async (user: IUser, token: any): Promise<void> => {
+  try {
+    const response = await fetch(`${BASE_URL}/user`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ email: user.email }),
+    });
+
+    if (!response.ok) {
+      throw new Error("Erro ao deletar usuário");
+    }
+  } catch (error) {
+    console.error(`Erro ao deletar usuário SERVICE: ${error}`);
+    throw error;
+  }
+};

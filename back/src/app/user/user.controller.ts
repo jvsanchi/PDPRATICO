@@ -46,7 +46,7 @@ export class UserController {
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(RoleEnum.MASTER)
+  @Roles(RoleEnum.MASTER, RoleEnum.ADMIN)
   @Delete()
   async disableUser(@Body("email") email: string): Promise<any> {
     return this.userService.disableUser(email);

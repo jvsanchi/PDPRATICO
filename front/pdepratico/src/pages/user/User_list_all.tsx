@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { IUser } from "../../interfaces/User";
-import { findUsers, updateUser } from "../../services/user/user.service";
+import {
+  findUsers,
+  updateUser,
+  deleteUser,
+} from "../../services/user/user.service";
 import {
   Card,
   Table,
@@ -34,16 +38,19 @@ const UserList: React.FC = () => {
   const fetchUsers = async () => {
     setLoading(true);
     try {
-       const token:any = localStorage.getItem("access_token");
+      const token = localStorage.getItem("access_token");
+      if (!token) throw new Error("Token não encontrado.");
+
       const allUsers = await findUsers(token);
 
+      // Mapeia as permissões para exibição
       const usersWithRoles = allUsers.map((user: IUser) => ({
         ...user,
         roleName: roleMapping[user.role.id] || "Unknown",
       }));
       setUsers(usersWithRoles);
     } catch (error) {
-      message.error(`Erro ao buscar usuários user_list_all: ${error}`);
+      message.error(`Erro ao buscar usuários: ${error}`);
     } finally {
       setLoading(false);
     }
@@ -52,7 +59,7 @@ const UserList: React.FC = () => {
   // Carregar usuários ao montar o componente
   useEffect(() => {
     fetchUsers();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Função para editar usuário
@@ -69,22 +76,53 @@ const UserList: React.FC = () => {
 
   // Função para atualizar o usuário
   const handleUpdate = async () => {
-     const token:any = localStorage.getItem("access_token");
-    if (editingUser) {
-      console.log(`editingUser ${JSON.stringify(editingUser)}`);
+    const token = localStorage.getItem("access_token");
+    if (editingUser && token) {
       try {
         const updatedUser = {
           ...editingUser,
-          role: editingUser.role.id, // Role deve ser enviada como enum/ID
+          role: editingUser.role.id,
         };
-        await updateUser(updatedUser, token); // Chama a API para atualizar o usuário
+        await updateUser(updatedUser, token);
         message.success("Usuário atualizado com sucesso!");
-        fetchUsers(); // Atualiza a tabela de usuários
+        fetchUsers();
         handleCancel();
       } catch (error) {
         message.error(`Erro ao atualizar usuário: ${error}`);
       }
     }
+  };
+
+  // Função para deletar o usuário
+  const handleDelete = async (user: IUser) => {
+    const token = localStorage.getItem("access_token");
+    const currentUserEmail = localStorage.getItem("user_email");
+
+    if (!token || !currentUserEmail) {
+      message.error("Erro ao obter informações do usuário logado.");
+      return;
+    }
+
+    if (currentUserEmail === user.email) {
+      message.error("Você não pode deletar sua própria conta.");
+      return;
+    }
+
+    Modal.confirm({
+      title: "Confirmação",
+      content: `Tem certeza que deseja deletar o usuário "${user.name}"?`,
+      okText: "Sim",
+      cancelText: "Não",
+      onOk: async () => {
+        try {
+          await deleteUser(user, token);
+          message.success("Usuário deletado com sucesso!");
+          fetchUsers();
+        } catch (error) {
+          message.error(`Erro ao deletar usuário: ${error}`);
+        }
+      },
+    });
   };
 
   // Definindo colunas para a tabela
@@ -117,6 +155,9 @@ const UserList: React.FC = () => {
         <div style={{ display: "flex", gap: "8px" }}>
           <Button type="primary" onClick={() => handleEdit(record)}>
             Editar
+          </Button>
+          <Button type="primary" danger onClick={() => handleDelete(record)}>
+            Deletar
           </Button>
         </div>
       ),

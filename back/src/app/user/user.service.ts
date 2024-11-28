@@ -34,7 +34,7 @@ export class UserService {
 
   async findByEmail(email: string): Promise<any> {
     const findEmail = await this.userEntity.findOne({
-      where: { email },
+      where: { email, activated: true },
       relations: ["role"],
     });
     return findEmail;

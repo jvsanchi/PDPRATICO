@@ -7,6 +7,7 @@ interface DecodedToken {
   roles: {
     role: string;
   };
+  email: string;
 }
 
 export const login = async (email: string, password: string) => {
@@ -31,18 +32,20 @@ export const login = async (email: string, password: string) => {
       typeof decodedToken === "object" &&
       decodedToken.roles &&
       typeof decodedToken.roles === "object" &&
-      typeof decodedToken.roles.role === "string"
+      typeof decodedToken.roles.role === "string" &&
+      typeof decodedToken.email === "string" // Adicione esta verificação
     ) {
-      // Armazena o papel do usuário e o token no localStorage
+      // Armazena o papel do usuário, o token e o email no localStorage
       localStorage.setItem("user_role", decodedToken.roles.role);
       localStorage.setItem("access_token", token);
-      console.log("Token armazenado com sucesso:", token);
+      localStorage.setItem("user_email", decodedToken.email); // Armazena o email do usuário
+      console.log("Dados armazenados com sucesso no localStorage.");
     } else {
       console.error(
-        "Erro: O campo 'role' não foi encontrado no token JWT.",
+        "Erro: O campo 'role' ou 'email' não foi encontrado no token JWT.",
         decodedToken
       );
-      throw new Error("Papel do usuário não encontrado no token JWT.");
+      throw new Error("Papel ou email do usuário não encontrado no token JWT.");
     }
 
     return data;
