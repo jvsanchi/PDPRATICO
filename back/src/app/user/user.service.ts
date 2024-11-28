@@ -82,7 +82,7 @@ export class UserService {
     }
 
     const newRole = await this.roleEntity.findOne({
-      where: { role: updateUserDTO.role },
+      where: { id: updateUserDTO.role },
     });
 
     update.email = updateUserDTO.email;

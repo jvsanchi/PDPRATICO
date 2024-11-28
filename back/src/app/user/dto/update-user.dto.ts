@@ -12,5 +12,5 @@ export class UpdateUserDTO {
   password: string;
 
   @ApiProperty()
-  role: RoleEnum;
+  role: number;
 }

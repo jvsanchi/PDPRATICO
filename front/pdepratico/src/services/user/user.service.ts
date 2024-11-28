@@ -25,11 +25,11 @@ export const createUser = async (user: IUser): Promise<IUser> => {
 };
 
 // Função para buscar todos os usuários
-export const findUsers = async (): Promise<IUser[]> => {
+export const findUsers = async (token: any): Promise<IUser[]> => {
   try {
     const response = await fetch(`${BASE_URL}/user`, {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`, // Adicione o token
+        Authorization: `Bearer ${token}`, // Adicione o token
       },
     });
     if (!response.ok) {
@@ -43,13 +43,13 @@ export const findUsers = async (): Promise<IUser[]> => {
 };
 
 // Função para atualizar um usuário
-export const updateUser = async (user: IUser): Promise<IUser> => {
+export const updateUser = async (user: IUser, token: any): Promise<IUser> => {
   try {
     const response = await fetch(`${BASE_URL}/user`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("token")}`, // Envie o token no cabeçalho
+        Authorization: `Bearer ${token}`, // Envie o token no cabeçalho
       },
       body: JSON.stringify(user),
     });

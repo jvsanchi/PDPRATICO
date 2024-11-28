@@ -54,7 +54,8 @@ const Stats: React.FC = () => {
   const fetchUserStats = async () => {
     setLoading(true);
     try {
-      const data = await findUsers();
+      const token: any = localStorage.getItem("access_token");
+      const data = await findUsers(token);
       const totalUsers = data.length; // Total de usuários
 
       setUserStats({

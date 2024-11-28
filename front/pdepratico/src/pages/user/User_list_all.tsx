@@ -34,15 +34,9 @@ const UserList: React.FC = () => {
   const fetchUsers = async () => {
     setLoading(true);
     try {
-      const allUsers = await findUsers();
+       const token:any = localStorage.getItem("access_token");
+      const allUsers = await findUsers(token);
 
-      const teste = localStorage.getItem("access_token");
-
-      console.log("TESTE", teste);
-
-      const userRole = localStorage.getItem("user_role");
-
-      console.log("userRole", userRole);
       const usersWithRoles = allUsers.map((user: IUser) => ({
         ...user,
         roleName: roleMapping[user.role.id] || "Unknown",
@@ -75,13 +69,15 @@ const UserList: React.FC = () => {
 
   // Função para atualizar o usuário
   const handleUpdate = async () => {
+     const token:any = localStorage.getItem("access_token");
     if (editingUser) {
+      console.log(`editingUser ${JSON.stringify(editingUser)}`);
       try {
         const updatedUser = {
           ...editingUser,
           role: editingUser.role.id, // Role deve ser enviada como enum/ID
         };
-        await updateUser(updatedUser); // Chama a API para atualizar o usuário
+        await updateUser(updatedUser, token); // Chama a API para atualizar o usuário
         message.success("Usuário atualizado com sucesso!");
         fetchUsers(); // Atualiza a tabela de usuários
         handleCancel();
